@@ -1,4 +1,3 @@
-import com.GameInterface.Chat;
 import com.GameInterface.QuestsBase;
 import com.Utils.Draw;
 import com.Utils.LDBFormat;
@@ -67,7 +66,6 @@ class com.fox.SpeedrunTimer.Timer {
 		Closebutton.onPress = Delegate.create(this, function(){
 			this.SignalClear.Emit();
 		});
-		setTimeout(Delegate.create(this, ShowFIFO), 5000);
 	}
 
 	private function OnPress() {
@@ -78,10 +76,6 @@ class com.fox.SpeedrunTimer.Timer {
 		CheckOverFlow();
 		TimerPos.x = m_Timer._x;
 		TimerPos.y = m_Timer._y;
-	}
-	
-	private function ShowFIFO() {
-		Chat.SignalShowFIFOMessage.Emit("Speed run started, Ctrl+R.Click timer to cancel", 0);
 	}
 
 	private function SetTiers(data:Array) {
