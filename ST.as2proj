@@ -36,10 +36,13 @@
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
     <compile path="src\com\fox\ST\Main.as" />
+    <compile path="src\com\fox\SpeedrunTimer\Main.as" />
   </compileTargets>
   <!-- Assets to embed into the output SWF -->
   <library>
     <asset path="src\asset\Russell Square Regular.ttf" update="..\..\assets\fonts\Russell Square Regular.ttf" />
+    <asset path="src\asset\FuturaMD_BT.ttf" update="..\..\assets\fonts\FuturaMD_BT.ttf" />
+    <asset path="src\asset\CloseButton.png" bitmap="False" />
   </library>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
@@ -48,11 +51,11 @@
   <!-- Executed before build -->
   <preBuildCommand />
   <!-- Executed after build -->
-  <postBuildCommand alwaysRun="False">xcopy "$(ProjectDir)\bin\*.*" "G:\Secret World Legends\Data\Gui\Custom\Flash\ST\*.*" /e /y
-xcopy "$(ProjectDir)\src\mod\*.*" "G:\Secret World Legends\Data\Gui\Custom\Flash\ST\*.*" /e /y
+  <postBuildCommand alwaysRun="False">xcopy "$(ProjectDir)\bin\*.*" "G:\Secret World Legends\Data\Gui\Custom\Flash\Speedrun\*.*" /e /y
+xcopy "$(ProjectDir)\src\mod\*.*" "G:\Secret World Legends\Data\Gui\Custom\Flash\Speedrun\*.*" /e /y
 
-xcopy "$(ProjectDir)\bin\*.*" "./deployment/ST/*.*" /e /y
-xcopy "$(ProjectDir)\src\mod\*.*" "./deployment/ST/*.*" /e /y</postBuildCommand>
+xcopy "$(ProjectDir)\bin\*.*" "./deployment/Speedrun/*.*" /e /y
+xcopy "$(ProjectDir)\src\mod\*.*" "./deployment/Speedrun/*.*" /e /y</postBuildCommand>
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />

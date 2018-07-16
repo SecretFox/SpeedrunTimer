@@ -45,6 +45,7 @@ You can then use any of these values as start/end point in `Speedrun_Start` and 
 For example you can set start to `/option Speedrun_Start "29921711511"`(Mission added) and end to `/option Speedrun_End "2992"`(Mission completed) for running The Black House.  
 Quotes are necessary for long number sequences.  
 If you want the run to end at quest completion you can just use 4 first numbers from the long number sequence.  
+To set both values at the same time use either command with values separated by cooma e.g `/option Speedrun_Start "29921711511,2992"`
 
 To restore default settings you can use `/option Speedrun_Default true`
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Root>
-	<Module  name = "ST"
-		movie       = "ST\SpeedrunTimer.swf"
+	<Module  name = "SpeedrunTimer"
+		movie       = "Speedrun\SpeedrunTimer.swf"
 		flags       = "GMF_CFG_STORE_USER_CONFIG | GMF_DONT_UNLOAD"
 		depth_layer = "Middle"
 		sub_depth   = "2"
