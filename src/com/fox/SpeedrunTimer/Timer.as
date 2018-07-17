@@ -21,6 +21,7 @@ class com.fox.SpeedrunTimer.Timer {
 	private var Tiers:Object = new Object();
 	private var LastRun:Array;
 	private var SectionFormat:TextFormat;
+	private var HeaderFormat:TextFormat;
 	private var m_SectionClip:MovieClip;
 	private var Entries:Array;
 	private var EndValue:String;
@@ -30,11 +31,17 @@ class com.fox.SpeedrunTimer.Timer {
 		m_swfRoot = root;
 		SignalClear = new Signal();
 		SectionFormat = new TextFormat("src.asset.FuturaMD_BT.ttf", 14, 0xFFFFFF, false, false, false, null, null, "left");
+		HeaderFormat = new TextFormat("src.asset.FuturaMD_BT.ttf", 14, 0xFFFFFF, false, false, false, null, null, "center");
 		EndValue = end;
 	}
 
+	private function SetTitle(val:String) {
+		if (val.length > 4) val = val.slice(0, 4);
+		m_TimerContent.Title.text = QuestsBase.GetQuest(Number(val), false, true).m_MissionName;
+	}
+
 	public function CreateTimer() {
-		if (m_Timer){
+		if (m_Timer) {
 			clearInterval(UpdateInterval);
 			m_Timer.removeMovieClip();
 		}
@@ -43,13 +50,13 @@ class com.fox.SpeedrunTimer.Timer {
 		var bg = m_Timer.createEmptyMovieClip("BG", m_Timer.getNextHighestDepth());
 		m_TimerContent = m_Timer.createEmptyMovieClip("m_TimerContent", m_Timer.getNextHighestDepth());
 		var Closebutton:MovieClip = m_Timer.attachMovie("src.asset.CloseButton.png", "Close", m_Timer.getNextHighestDepth());
+
 		Closebutton._alpha = 80;
 		m_TimerContent._x = 5;
 		m_TimerContent._y = 5;
 		m_Timer._x = TimerPos.x;
 		m_Timer._y = TimerPos.y;
 
-		Draw.DrawRectangle(bg, 0, 0, 120, 60, 0x000000, 40, [5, 5, 5, 5], 3);
 		Counter = m_TimerContent.createTextField("Counter", m_TimerContent.getNextHighestDepth(), 0, 6, 140, 60);
 		var format:TextFormat = new TextFormat("src.asset.Russell Square Regular.ttf", 34, 0xFFFFFF, false, false, false, null, null, "center");
 		Counter.setTextFormat(format);
@@ -58,14 +65,23 @@ class com.fox.SpeedrunTimer.Timer {
 		Counter.embedFonts = true;
 		Counter.autoFit = true;
 		Counter.text = "00:00";
-		
+
 		bg.onPress = Delegate.create(this, OnPress);
 		bg.onRelease = Delegate.create(this, OnRelease);
 		bg.onReleaseOutside = Delegate.create(this, OnRelease);
-		
-		Closebutton.onPress = Delegate.create(this, function(){
+
+		Closebutton.onPress = Delegate.create(this, function() {
 			this.SignalClear.Emit();
 		});
+		RedrawBG();
+		var Title:TextField = m_TimerContent.createTextField("Title", m_TimerContent.getNextHighestDepth(), Counter._x + Counter._width + 10, Counter._y + 5, 200, 60);
+		Title.embedFonts = true;
+		Title.multiline = true;
+		Title.autoSize = "left";
+		Title.wordWrap = true;
+		Title.selectable = false;
+		Title.setNewTextFormat(SectionFormat);
+		SetTitle(EndValue);
 	}
 
 	private function OnPress() {
@@ -76,16 +92,6 @@ class com.fox.SpeedrunTimer.Timer {
 		CheckOverFlow();
 		TimerPos.x = m_Timer._x;
 		TimerPos.y = m_Timer._y;
-	}
-
-	private function SetTiers(data:Array) {
-		for (var i:Number = 0; i < data.length; i++) {
-			var entry:Array = data[i].split(";");
-			var index = entry[0];
-			var desc = entry[1];
-			var time = entry[2];
-			Tiers[string(index)] = [desc,time]
-		}
 	}
 
 	public function GetTimer() {return m_Timer};
@@ -102,39 +108,28 @@ class com.fox.SpeedrunTimer.Timer {
 
 	private function CreateHeader() {
 		m_SectionClip = m_TimerContent.createEmptyMovieClip("SectionTimes", m_TimerContent.getNextHighestDepth());
-		var Title:TextField = m_TimerContent.createTextField("Title", m_TimerContent.getNextHighestDepth(),Counter._x+Counter._width+40,Counter._y+5,20,60);
 		var Header:MovieClip = m_SectionClip.createEmptyMovieClip("Header", m_SectionClip.getNextHighestDepth());
 		var EntryClips:MovieClip = m_SectionClip.createEmptyMovieClip("Entries", m_SectionClip.getNextHighestDepth());
 
-		var Goal:TextField = Header.createTextField("Goal", Header.getNextHighestDepth(),0,0,20,20);
-		var Time:TextField  = Header.createTextField("Time", Header.getNextHighestDepth(),200,0,20,20);
-		var BestTime:TextField  = Header.createTextField("BestTime", Header.getNextHighestDepth(),250,0,20,20);
-		var Diff:TextField  = Header.createTextField("Diff", Header.getNextHighestDepth(), 300, 0,20,20);
-
-		Goal.autoSize = "left";
-		Time.autoSize = "left";
-		BestTime.autoSize = "left";
-		Diff.autoSize = "left";
-		Title.autoSize = "left";
+		var Goal:TextField = Header.createTextField("Goal", Header.getNextHighestDepth(),0,0,50,20);
+		var Time:TextField  = Header.createTextField("Time", Header.getNextHighestDepth(),200,0,50,20);
+		var BestTime:TextField  = Header.createTextField("BestTime", Header.getNextHighestDepth(),250,0,50,20);
+		var Diff:TextField  = Header.createTextField("Diff", Header.getNextHighestDepth(), 300, 0,50,20);
 
 		Goal.embedFonts = true;
 		Time.embedFonts = true;
 		BestTime.embedFonts = true;
 		Diff.embedFonts = true;
-		Title.embedFonts = true;
 
 		Goal.setNewTextFormat(SectionFormat);
-		Time.setNewTextFormat(SectionFormat);
-		BestTime.setNewTextFormat(SectionFormat);
-		Diff.setNewTextFormat(SectionFormat);
-		Title.setNewTextFormat(SectionFormat);
-		Title.multiline = true;
+		Time.setNewTextFormat(HeaderFormat);
+		BestTime.setNewTextFormat(HeaderFormat);
+		Diff.setNewTextFormat(HeaderFormat);
 
 		Goal.selectable = false;
 		Time.selectable = false;
 		BestTime.selectable = false;
 		Diff.selectable = false;
-		Title.selectable = false;
 
 		Goal.text = "Goal";
 		Time.text = "Time";
@@ -153,10 +148,9 @@ class com.fox.SpeedrunTimer.Timer {
 		var m_QuestID = key.slice(0, 4);
 		var m_TierID = key.slice(4, 9);
 		var TierText:String;
-		if (key.split("_")[0] == EndValue){
+		if (key.split("_")[0] == EndValue) {
 			TierText = "Finished";
-		}
-		else{
+		} else {
 			TierText = LDBFormat.LDBGetText("QuestGoalNames", Number(m_TierID));
 			if (!TierText) {
 				m_TierID = key.slice(4, 8);
@@ -165,7 +159,6 @@ class com.fox.SpeedrunTimer.Timer {
 			if (!TierText) TierText = key.split("_")[0];
 		}
 		var time = key.split("_")[1];
-		m_TimerContent.Title.text = QuestsBase.GetQuest(m_QuestID, false, true).m_MissionName;
 
 		var EntriesBase:MovieClip = m_SectionClip.Entries;
 		var Entry = EntriesBase.createEmptyMovieClip(key.split("_")[0], EntriesBase.getNextHighestDepth());
@@ -173,9 +166,9 @@ class com.fox.SpeedrunTimer.Timer {
 		Entry._y = Entries.length * 20;
 
 		var Goal:TextField  = Entry.createTextField("Goal", Entry.getNextHighestDepth(), 0, 0, 180, 20);
-		var Time:TextField  = Entry.createTextField("Time", Entry.getNextHighestDepth(), 200, 0, 50, 20);
-		var Best:TextField  = Entry.createTextField("Best", Entry.getNextHighestDepth(), 250, 0, 50, 20);
-		var Diff:TextField  = Entry.createTextField("Diff", Entry.getNextHighestDepth(), 300, 0, 50, 20);
+		var Time:TextField  = Entry.createTextField("Time", Entry.getNextHighestDepth(), 200, 0, 60, 20);
+		var Best:TextField  = Entry.createTextField("Best", Entry.getNextHighestDepth(), 250, 0, 60, 20);
+		var Diff:TextField  = Entry.createTextField("Diff", Entry.getNextHighestDepth(), 300, 0, 60, 20);
 
 		Goal.embedFonts = true;
 		Goal.setNewTextFormat(SectionFormat);
@@ -191,7 +184,7 @@ class com.fox.SpeedrunTimer.Timer {
 		Best.setNewTextFormat(SectionFormat);
 		Best.selectable = false;
 		Best.text =  com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(time / 60000), Math.floor(time / 1000) % 60 );
-		
+
 		Diff.embedFonts = true;
 		Diff.setNewTextFormat(SectionFormat);
 		Diff.selectable = false;
@@ -209,7 +202,12 @@ class com.fox.SpeedrunTimer.Timer {
 
 	private function RedrawBG() {
 		m_Timer.BG.clear();
-		Draw.DrawRectangle(m_Timer.BG, 0, 0,  m_TimerContent._width + 20, m_TimerContent._height + 25, 0x000000, 40, [5, 5, 5, 5], 3);
+		if (Entries.length == 0) {
+			Draw.DrawRectangle(m_Timer.BG, 0, 0,  370, 100, 0x000000, 40, [5, 5, 5, 5], 3);
+		} else {
+			Draw.DrawRectangle(m_Timer.BG, 0, 0,  m_TimerContent._width + 20, m_TimerContent._height + 25, 0x000000, 40, [5, 5, 5, 5], 3);
+		}
+
 		m_Timer.Close._x = m_Timer.BG._width -20;
 		m_Timer.Close._y = m_Timer.BG._y +5;
 		CheckOverFlow();
@@ -254,6 +252,7 @@ class com.fox.SpeedrunTimer.Timer {
 		if (!Found) {
 			CreateSectionEntry(key + "_" + time, true);
 		}
+		SetTitle(key);
 	}
 
 	public function SetStartTime(value:Number) {
