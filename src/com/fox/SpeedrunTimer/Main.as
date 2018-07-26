@@ -1,7 +1,6 @@
 import com.GameInterface.DistributedValue;
 import com.GameInterface.DistributedValueBase;
 import com.GameInterface.GUIModuleIF;
-import com.GameInterface.Game.Character;
 import com.GameInterface.LogBase;
 import com.GameInterface.Quest;
 import com.GameInterface.QuestsBase;
@@ -21,12 +20,11 @@ class com.fox.SpeedrunTimer.Main {
 	private var CurrentRun:Array;
 	private var RunArchieve:Archive;
 
-	private var PlayerCharacter:Character;
 	private var m_Timer:Timer;
 	private var TimerPos:Point;
 
-	private var DValStart:DistributedValue;
-	private var DValStop:DistributedValue;
+	private var DValSet:DistributedValue;
+	private var OtherQuests:Array;
 	private var DValDebug:DistributedValue;
 	private var DValDefaults:DistributedValue;
 
@@ -40,12 +38,10 @@ class com.fox.SpeedrunTimer.Main {
 		swfRoot.OnModuleDeactivated = function() { return s_app.SaveConfig(); };
 	}
 
-//Startup
+//Setup
 	public function Main(root) {
 		m_swfroot = root;
-		PlayerCharacter = Character.GetClientCharacter();
-		DValStart = DistributedValue.Create("Speedrun_Start");
-		DValStop = DistributedValue.Create("Speedrun_Stop");
+		DValSet = DistributedValue.Create("Speedrun_Set");
 		DValDebug = DistributedValue.Create("Speedrun_Debug");
 		DValDefaults = DistributedValue.Create("Speedrun_Default");
 
@@ -54,8 +50,13 @@ class com.fox.SpeedrunTimer.Main {
 		StartTime = config.FindEntry("StartTime");
 		StartValue = config.FindEntry("Start", "38401914411");
 		EndValue = config.FindEntry("End", "3840");
+		
 		CurrentRun = config.FindEntryArray("CurrentRun");
 		if (!CurrentRun) CurrentRun = new Array();
+		
+		OtherQuests = config.FindEntryArray("OtherQuests");
+		if (!OtherQuests) OtherQuests = new Array();
+		
 		DValDebug.SetValue(config.FindEntry("Debug"), false);
 		TimerPos = config.FindEntry("m_TimerPos");
 		RunArchieve = config.FindEntry("RunArchieve",new Archive());
@@ -79,6 +80,9 @@ class com.fox.SpeedrunTimer.Main {
 		for (var i:Number = 0; i < CurrentRun.length; i++ ) {
 			config.AddEntry("CurrentRun", CurrentRun[i]);
 		}
+		for (var i:Number = 0; i < OtherQuests.length; i++ ) {
+			config.AddEntry("OtherQuests", OtherQuests[i]);
+		}
 		config.AddEntry("Start", StartValue);
 		config.AddEntry("End", EndValue);
 		config.AddEntry("Debug", DValDebug.GetValue());
@@ -93,6 +97,10 @@ class com.fox.SpeedrunTimer.Main {
 		for (var i:Number = 0; i < CurrentRun.length; i++ ) {
 			config.AddEntry("CurrentRun", CurrentRun[i]);
 		}
+		for (var i:Number = 0; i < OtherQuests.length; i++ ) {
+			config.AddEntry("OtherQuests", OtherQuests[i]);
+		}
+		
 		config.AddEntry("Start", StartValue);
 		config.AddEntry("End", EndValue);
 		config.AddEntry("Debug", DValDebug.GetValue());
@@ -105,8 +113,7 @@ class com.fox.SpeedrunTimer.Main {
 		QuestsBase.SignalTaskAdded.Connect(SlotTaskAdded, this);
 		QuestsBase.SignalGoalProgress.Connect(SlotQuestProgressed, this);
 		QuestsBase.SignalMissionCompleted.Connect(SloQuestCompleted, this);
-		DValStart.SignalChanged.Connect(SlotStartConditionChanged, this);
-		DValStop.SignalChanged.Connect(SlotStopConditionChanged, this);
+		DValSet.SignalChanged.Connect(SlotSetChanged, this);
 		DValDebug.SignalChanged.Connect(PrintCurrentSettings, this);
 		DValDefaults.SignalChanged.Connect(SetDefaultValues, this);
 	}
@@ -115,40 +122,34 @@ class com.fox.SpeedrunTimer.Main {
 		QuestsBase.SignalTaskAdded.Disconnect(SlotTaskAdded, this);
 		QuestsBase.SignalGoalProgress.Disconnect(SlotQuestProgressed, this);
 		QuestsBase.SignalMissionCompleted.Disconnect(SloQuestCompleted, this);
-		DValStart.SignalChanged.Disconnect(SlotStartConditionChanged, this);
-		DValStop.SignalChanged.Disconnect(SlotStopConditionChanged, this);
+		DValSet.SignalChanged.Disconnect(SlotSetChanged, this);
 		DValDebug.SignalChanged.Disconnect(PrintCurrentSettings, this);
 		DValDefaults.SignalChanged.Disconnect(SetDefaultValues, this);
 	}
 //Settings
-	private function SlotStartConditionChanged(dv:DistributedValue) {
+	private function SlotSetChanged(dv:DistributedValue) {
 		var val:String = string(dv.GetValue());
+		OtherQuests = undefined;
 		if (val) {
-			if (val.indexOf(",") > 0) {
-				var values:Array = val.split(",");
+			var values:Array = val.split(",");
+			if (values.length == 1){
 				StartValue = values[0];
-				EndValue = values[1];
-			} else {
-				StartValue = val;
+				EndValue = StartValue.slice(0, 4);
 			}
-		}
-	}
-	private function SlotStopConditionChanged(dv:DistributedValue) {
-		var val:String = string(dv.GetValue());
-		if (val) {
-			if (val.indexOf(",") > 0) {
-				var values:Array = val.split(",");
+			else if (values.length == 2){
 				StartValue = values[0];
 				EndValue = values[1];
-			} else {
-				EndValue = val;
+			}
+			else if (values.length > 2){
+				StartValue = string(values.shift());
+				EndValue = string(values.pop());
+				OtherQuests = values;
 			}
 		}
 	}
 	private function SetDefaultValues(dv:DistributedValue) {
 		if (dv.GetValue()) {
-			DValStart.SetValue("38401914411");
-			DValStop.SetValue("3840");
+			DValSet.SetValue("38401914411,3840");
 			dv.SetValue(false);
 		}
 	}
@@ -159,14 +160,46 @@ class com.fox.SpeedrunTimer.Main {
 		}
 		return false;
 	}
-
+	private function InRun(QuestID:Number){
+		if(StartValue.indexOf(string(QuestID)) >= 0  || EndValue.indexOf(string(QuestID)) >= 0) return true
+		for (var i in OtherQuests){
+			var entry = OtherQuests[i];
+			var m_QuestID = entry.slice(0, 4);
+			if (Number(m_QuestID) == QuestID){
+				return true
+			}
+		}
+		return false
+	}
+	
+	private function CheckBestRun() {
+		var runArray:Array = RunArchieve.FindEntryArray(StartValue + EndValue);
+		var replace;
+		var newEntry:Array = CurrentRun[CurrentRun.length-1].split("_");
+		var LastEntry:Array;
+		for (var i in runArray){
+			var Entry = runArray[i].split("_");
+			if (!LastEntry || Number(Entry[1]) > Number(LastEntry[1])){
+				LastEntry = Entry;
+			}
+		}
+		if (Number(newEntry[1]) <= Number(LastEntry[1])) {
+			replace = true;
+		}
+		if (replace || !LastEntry || !newEntry) {
+			RunArchieve.DeleteEntry(StartValue + EndValue);
+			for (var i:Number = 0; i < CurrentRun.length; i++) {
+				RunArchieve.AddEntry(StartValue + EndValue, CurrentRun[i]);
+			}
+		}
+	}
 //Timer
 	private function StartTimer() {
-		if (!m_Timer) {
-			m_Timer = new Timer(m_swfroot, TimerPos, EndValue);
-			m_Timer.CreateTimer();
-			m_Timer.SignalClear.Connect(RemoveTimer, this);
-		}
+		m_Timer.ClearTimer();
+		m_Timer = undefined;
+		m_Timer = new Timer(m_swfroot, TimerPos, EndValue);
+		m_Timer.CreateTimer();
+		m_Timer.SignalClear.Connect(RemoveTimer, this);
 		m_Timer.SetStartTime(StartTime);
 		m_Timer.SetArchieve(RunArchieve.FindEntryArray(StartValue + EndValue));
 		ManualSave();
@@ -178,72 +211,45 @@ class com.fox.SpeedrunTimer.Main {
 		StartTime = undefined;
 		m_Timer.ClearTimer();
 		m_Timer = undefined;
+		OtherQuests = undefined;
 		ManualSave();
 	}
 
-	private function Checkbestrun() {
-		var runArray:Array = RunArchieve.FindEntryArray(StartValue + EndValue);
-		var found;
-		var replace;
-		var LastEntry:Array;
-		for (var i in CurrentRun) {
-			var entry:Array = CurrentRun[i].split("_");
-			if (entry[0] == EndValue) {
-				LastEntry = entry;
-				break
-			}
-		}
-		for (var i in runArray) {
-			var entry:Array = runArray[i].split("_");
-			if (entry[0] == LastEntry[0]) {
-				found = true;
-				if (entry[1] > LastEntry[1]) {
-					replace = true;
-				}
-				break
-			}
-		}
-		if (replace || !found || !LastEntry) {
-			RunArchieve.DeleteEntry(StartValue + EndValue);
-			for (var i:Number = 0; i < CurrentRun.length; i++) {
-				RunArchieve.AddEntry(StartValue + EndValue, CurrentRun[i]);
-			}
-		}
-	}
-	private function FinishRun() {
-		var Final:Date = new Date();
-		var FinalTime = Final.valueOf();
-		var Elapsed = FinalTime - StartTime;
-		CurrentRun.push(EndValue + "_" + Elapsed);
-		updateSectionTime(EndValue, Elapsed);
+	//Replaces runArchieve entry if new time is faster
+	private function FinishRun(Elapsed) {
 		m_Timer.DisplayFinalTime(Elapsed);
 		m_Timer.StopTimer();
-		Checkbestrun();
+		CheckBestRun();
 		ManualSave();
+		CurrentRun = new Array();
+		StartTime = undefined;
 	}
-	private function updateSectionTime(key:String) {
-		var current:Date = new Date();
-		var currentTime = current.valueOf();
-		var Elapsed = currentTime - StartTime;
-		CurrentRun.push(key + "_" + Elapsed);
-		var runArray:Array = RunArchieve.FindEntryArray(StartValue + EndValue);
-		if (runArray) {
-			var Found;
-			for (var i in runArray) {
-				var entry = runArray[i].split("_");
-				var id = entry[0];
-				var time = entry[1];
-				if (id == key) {
-					Found = true;
-					break
-				}
-			}
-			if (!Found) {
-				RunArchieve.AddEntry(StartValue+EndValue, key +"_" + Elapsed);
-			}
-		} else {
-			RunArchieve.AddEntry(StartValue + EndValue,  key + "_" + Elapsed);
+	
+	// Replaces currentrun entry with new time if key is the same
+	// Key can be same because it does not use SolvedTimes / RepeatCount
+	// This should save some space in Prefs file,and make section times listing shorter.
+	private function AddToCurrentRun(key, Elapsed){
+		var Found:String;
+		for (var i in CurrentRun){
+			var Entry = CurrentRun[i].split("_");
+			if (Entry[0] == key) Found = i;
 		}
+		if (Found != undefined){
+			CurrentRun[Found] = key + "_" + Elapsed;
+		}else{
+			CurrentRun.push(key + "_" + Elapsed);
+		}
+		
+	}
+	private function updateSectionTime(key:String, override) {
+		var Elapsed
+		if(!override){
+			var current:Date = new Date();
+			Elapsed = current.valueOf() - StartTime;
+		}else{
+			Elapsed = override;
+		}
+		AddToCurrentRun(key, Elapsed);
 		m_Timer.SetTierTime(key, Elapsed);
 		ManualSave();
 	}
@@ -265,30 +271,37 @@ class com.fox.SpeedrunTimer.Main {
 		var Str = string(QuestID) + m_quest.m_CurrentTask.m_ID + m_quest.m_CurrentTask.m_Tier + m_quest.m_CurrentTask.m_CurrentPhase;
 		if (Str == StartValue) {
 			var date:Date = new Date();
-			var start = date.valueOf();
-			StartTime = start;
-			StartTimer(QuestID);
+			CurrentRun = new Array();
+			StartTime = date.valueOf();
+			StartTimer();
 		}
 		if (DValDebug.GetValue()) {
 			Feedback("Task added \"" + Str+"\"");
 		}
 	}
+		
 	private function SlotQuestProgressed(QuestID:Number, goalID:Number, SolvedTimes:Number, RepeatCount:Number ) {
 		if (IsChallenge(QuestID)) return;
 		var ProgressStr = string(QuestID) + goalID; // + SolvedTimes + RepeatCount; Gets too long with lots of collection tasks
 		var m_quest:Quest = QuestsBase.GetQuest(QuestID, false, true);
+		
 		if (ProgressStr + SolvedTimes + RepeatCount == StartValue) {
+			CurrentRun = new Array();
 			var date:Date = new Date();
 			StartTime = date.valueOf();
 			StartTimer();
-		} else if ((StartTime && StartValue.indexOf(string(QuestID)) >= 0) || (EndValue && EndValue.indexOf(string(QuestID)) >= 0)) {
-			// TODO, add support for multiple quests in speedrun
-			// Currently this should still work for multiple quests, but section times will only get updated for quests that have same id as Start or End Value.
+		} 
+		else if (ProgressStr + SolvedTimes + RepeatCount == EndValue) {
+			var Final:Date = new Date();
+			var FinalTime = Final.valueOf();
+			var Elapsed = FinalTime - StartTime;
+			updateSectionTime("Finished", Elapsed);
+			FinishRun(Elapsed);
+		}
+		else if ( InRun(QuestID) && m_Timer.running) {
 			updateSectionTime(ProgressStr);
 		}
-		if (ProgressStr + SolvedTimes + RepeatCount == EndValue) {
-			FinishRun();
-		}
+		
 		if (DValDebug.GetValue()) {
 			Feedback("Quest progress on " + m_quest.m_MissionName + " " + "\"" + ProgressStr + SolvedTimes + RepeatCount + "\"");
 		}
@@ -296,7 +309,11 @@ class com.fox.SpeedrunTimer.Main {
 	private function SloQuestCompleted(QuestID) {
 		if (IsChallenge(QuestID)) return;
 		if (string(QuestID) == EndValue) {
-			FinishRun();
+			var Final:Date = new Date();
+			var FinalTime = Final.valueOf();
+			var Elapsed = FinalTime - StartTime;
+			updateSectionTime("Finished", Elapsed);
+			FinishRun(Elapsed);
 		}
 		if (DValDebug.GetValue()) {
 			Feedback("Quest completed  " + QuestID);

@@ -18,13 +18,12 @@ class com.fox.SpeedrunTimer.Timer {
 	private var Counter:TextField;
 	private var UpdateInterval;
 	public var SignalClear:Signal;
-	private var Tiers:Object = new Object();
-	private var LastRun:Array;
 	private var SectionFormat:TextFormat;
 	private var HeaderFormat:TextFormat;
 	private var m_SectionClip:MovieClip;
 	private var Entries:Array;
 	private var EndValue:String;
+	public var running:Boolean;
 
 	public function Timer(root:MovieClip, pos:Point,end:String) {
 		TimerPos = pos;
@@ -82,6 +81,8 @@ class com.fox.SpeedrunTimer.Timer {
 		Title.selectable = false;
 		Title.setNewTextFormat(SectionFormat);
 		SetTitle(EndValue);
+		CreateHeader();
+		CheckOverFlow();
 	}
 
 	private function OnPress() {
@@ -148,16 +149,12 @@ class com.fox.SpeedrunTimer.Timer {
 		var m_QuestID = key.slice(0, 4);
 		var m_TierID = key.slice(4, 9);
 		var TierText:String;
-		if (key.split("_")[0] == EndValue) {
-			TierText = "Finished";
-		} else {
-			TierText = LDBFormat.LDBGetText("QuestGoalNames", Number(m_TierID));
-			if (!TierText) {
-				m_TierID = key.slice(4, 8);
-				TierText = LDBFormat.LDBGetText("QuestGoalNames", m_TierID);
-			}
-			if (!TierText) TierText = key.split("_")[0];
+		TierText = LDBFormat.LDBGetText("QuestGoalNames", Number(m_TierID));
+		if (!TierText) {
+			m_TierID = key.slice(4, 8);
+			TierText = LDBFormat.LDBGetText("QuestGoalNames", m_TierID);
 		}
+		if (!TierText) TierText = key.split("_")[0];
 		var time = key.split("_")[1];
 
 		var EntriesBase:MovieClip = m_SectionClip.Entries;
@@ -195,7 +192,7 @@ class com.fox.SpeedrunTimer.Timer {
 	}
 
 	public function DisplayFinalTime(time:Number) {
-		var TimeString = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(time / 60000), Math.floor(time) % 60000 );
+		var TimeString = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(time / 60000), Math.floor(time / 1000) % 60 );
 		m_TimerContent.Title.text += "\n"+TimeString +" (" + time/1000+"s)";
 		RedrawBG();
 	}
@@ -220,14 +217,22 @@ class com.fox.SpeedrunTimer.Timer {
 	}
 
 	public function SetArchieve(Data:Array) {
-		CreateHeader();
-		LastRun = Data;
+		for (var i in Entries){
+			Entries[i].removeMovieClip();
+		}
+		var SortedList:Array = new Array();
 		for (var i:Number = 0; i < Data.length; i++) {
-			CreateSectionEntry(Data[i]);
+			var Entry = Data[i].split("_");
+			if(Entry[0] != "Finished")	SortedList.push({Tier:Entry[0],Time:Entry[1]});
+		}
+		SortedList.sortOn("Time", Array.NUMERIC);
+		for (var i:Number = 0; i < SortedList.length; i++) {
+			CreateSectionEntry(SortedList[i]["Tier"]+"_"+SortedList[i]["Time"]);
 		}
 	}
 
 	public function SetTierTime(key, time) {
+		if(key == "Finished") return
 		var Found;
 		for (var i in Entries) {
 			var Entry:MovieClip = Entries[i];
@@ -260,6 +265,7 @@ class com.fox.SpeedrunTimer.Timer {
 		StartTime = value;
 		clearInterval(UpdateInterval);
 		UpdateInterval = setInterval(Delegate.create(this, UpdateTime), 500);
+		running = true;
 	}
 
 	private function  UpdateTime() {
@@ -269,12 +275,9 @@ class com.fox.SpeedrunTimer.Timer {
 		Counter.text = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(Elapsed / 60000), Math.floor(Elapsed/1000) % 60 );
 	}
 
-	public function RemoveTimer() {
-		m_Timer.removeMovieClip();
-	}
-
 	public function StopTimer() {
 		clearInterval(UpdateInterval);
+		running = false;
 	}
 
 	public function ClearTimer() {
