@@ -1,6 +1,7 @@
 # SpeedrunTimer
 Secret world legends mod to help time speedruns.  
 ![alt text](https://i.imgur.com/AeQbVol.png "Example")  
+(Ignore the last section time entry,old pic).  
 	
 By default this mod is configured for "In the Dusty Dark" mission, timer will appear when you approach the first torch and stops on mission completion.  
 
@@ -27,7 +28,7 @@ Some other missions you can run:
 `/option Speedrun_Set "38401914411"` In the Dusty Dark  
 `/option Speedrun_Set "30851751921"` Cost of Magic  
 `/option Speedrun_Set "30721744411"` Sins of the Father  
-`/option Speedrun_Set "34641947611"` I Walk Into Empty
+`/option Speedrun_Set "34641947611"` I Walk Into Empty  
 `/option Speedrun_Set "34531941011,3453,3462,3463,3464"` Tyler Freeborn, whole chain
 
 
