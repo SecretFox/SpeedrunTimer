@@ -27,8 +27,8 @@ Some other missions you can run:
 `/option Speedrun_Set "38401914411"` In the Dusty Dark  
 `/option Speedrun_Set "30851751921"` Cost of Magic  
 `/option Speedrun_Set "30721744411"` Sins of the Father  
-`/option Speedrun_Set "34641947611"` The Vanishing of Tyler Freeborn  
 `/option Speedrun_Set "34641947611"` I Walk Into Empty
+`/option Speedrun_Set "34531941011,3453,3462,3463,3464"` Tyler Freeborn, whole chain
 
 
 **Install:**

@@ -1,4 +1,5 @@
 import com.GameInterface.QuestsBase;
+import com.GameInterface.UtilsBase;
 import com.Utils.Draw;
 import com.Utils.LDBFormat;
 import com.Utils.Signal;
@@ -34,7 +35,7 @@ class com.fox.SpeedrunTimer.Timer {
 		EndValue = end;
 	}
 
-	private function SetTitle(val:String) {
+	public function SetTitle(val:String) {
 		if (val.length > 4) val = val.slice(0, 4);
 		m_TimerContent.Title.text = QuestsBase.GetQuest(Number(val), false, true).m_MissionName;
 	}
@@ -158,7 +159,7 @@ class com.fox.SpeedrunTimer.Timer {
 		var time = key.split("_")[1];
 
 		var EntriesBase:MovieClip = m_SectionClip.Entries;
-		var Entry = EntriesBase.createEmptyMovieClip(key.split("_")[0], EntriesBase.getNextHighestDepth());
+		var Entry:MovieClip = EntriesBase.createEmptyMovieClip(key.split("_")[0], EntriesBase.getNextHighestDepth());
 		Entry.msTime = time;
 		Entry._y = Entries.length * 20;
 
@@ -171,6 +172,10 @@ class com.fox.SpeedrunTimer.Timer {
 		Goal.setNewTextFormat(SectionFormat);
 		Goal.selectable = false;
 		Goal.text = TierText;
+		
+		var BG:MovieClip = Entry.createEmptyMovieClip("BG", Entry.getNextHighestDepth());
+		Draw.DrawRectangle(BG, Goal._x, Goal._y, 360, 20, 0xFFFFFF, 20,[2,2,2,2]);
+		BG._visible = false;
 
 		Time.embedFonts = true;
 		Time.setNewTextFormat(SectionFormat);
@@ -186,7 +191,6 @@ class com.fox.SpeedrunTimer.Timer {
 		Diff.setNewTextFormat(SectionFormat);
 		Diff.selectable = false;
 		if (newEntry) Diff.text = " 00:00";
-
 		Entries.push(Entry);
 		RedrawBG();
 	}
@@ -199,11 +203,12 @@ class com.fox.SpeedrunTimer.Timer {
 
 	private function RedrawBG() {
 		m_Timer.BG.clear();
-		if (Entries.length == 0) {
-			Draw.DrawRectangle(m_Timer.BG, 0, 0,  370, 100, 0x000000, 40, [5, 5, 5, 5], 3);
-		} else {
-			Draw.DrawRectangle(m_Timer.BG, 0, 0,  m_TimerContent._width + 20, m_TimerContent._height + 25, 0x000000, 40, [5, 5, 5, 5], 3);
+		var height = 0;
+		for (var i in Entries){
+			if (Entries[i]._visible) height += 20;
 		}
+		if (height) Draw.DrawRectangle(m_Timer.BG, 0, 0,  m_TimerContent._width + 10, height + 115, 0x000000, 40, [5, 5, 5, 5], 3);
+		else Draw.DrawRectangle(m_Timer.BG, 0, 0,  370, 100, 0x000000, 40, [5, 5, 5, 5], 3);
 
 		m_Timer.Close._x = m_Timer.BG._width -20;
 		m_Timer.Close._y = m_Timer.BG._y +5;
@@ -229,6 +234,47 @@ class com.fox.SpeedrunTimer.Timer {
 		for (var i:Number = 0; i < SortedList.length; i++) {
 			CreateSectionEntry(SortedList[i]["Tier"]+"_"+SortedList[i]["Time"]);
 		}
+		SetScroll(0);
+		RedrawBG();
+	}
+	
+	private function SetScroll(index){
+		var Changed;
+		for (var i = 0; i < Entries.length; i++){
+			if (i + 2 < index || i > index + 4){
+				Changed = true;
+				Entries[i]._visible = false;
+				// so that CheckOverFlow() doesn't freak out:
+				Entries[i]._y = 0;
+			}
+			else if(!Entries[i]._visible){
+				Changed = true;
+				Entries[i]._visible = true;
+			}
+		}
+		if (Changed){
+			var yPos = 0;
+			var ActiveSet;
+			for (var i = 0; i < Entries.length; i++){
+				if (i == index + 1 && !ActiveSet){
+					Entries[i].BG._visible = true;
+				}
+				else if (index == 0 && i == 0 && !ActiveSet) {
+					if (!Entries[i].Diff.text){
+						Entries[i].BG._visible = true;
+						ActiveSet = true;
+					}else{
+						Entries[i].BG._visible = false;
+					}
+				}
+				else Entries[i].BG._visible = false;
+				
+				if (Entries[i]._visible){
+					Entries[i]._y = yPos;
+					yPos += 20;
+				}
+			}
+		}
 	}
 
 	public function SetTierTime(key, time) {
@@ -237,7 +283,7 @@ class com.fox.SpeedrunTimer.Timer {
 		for (var i in Entries) {
 			var Entry:MovieClip = Entries[i];
 			if (Entry._name == key) {
-				Found = true;
+				Found = i;
 				Entry.Time.text = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(time / 60000), Math.floor(time / 1000) % 60);
 				if (Entry.Time.text && Entry.Best.text) {
 					var difference = Math.floor((Entry.msTime-time) / 1000);
@@ -256,8 +302,11 @@ class com.fox.SpeedrunTimer.Timer {
 		}
 		if (!Found) {
 			CreateSectionEntry(key + "_" + time, true);
+			Found = Entries.length - 1;
 		}
+		SetScroll(Number(Found));
 		SetTitle(key);
+		RedrawBG();
 	}
 
 	public function SetStartTime(value:Number) {
@@ -278,6 +327,11 @@ class com.fox.SpeedrunTimer.Timer {
 	public function StopTimer() {
 		clearInterval(UpdateInterval);
 		running = false;
+		for (var i = 0; i < Entries.length; i++){
+			Entries[i]._visible = true;
+			Entries[i]._y = i*20;
+		}
+		RedrawBG();
 	}
 
 	public function ClearTimer() {

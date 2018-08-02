@@ -4,6 +4,7 @@ import com.GameInterface.GUIModuleIF;
 import com.GameInterface.LogBase;
 import com.GameInterface.Quest;
 import com.GameInterface.QuestsBase;
+import com.GameInterface.Utils;
 import com.Utils.Archive;
 import com.fox.SpeedrunTimer.Timer;
 import flash.geom.Point;
@@ -73,7 +74,19 @@ class com.fox.SpeedrunTimer.Main {
 				m_Timer.SetTierTime(Entry[0], Entry[1]);
 			}
 		}
+		if(m_Timer){
+			var ActiveQuests = QuestsBase.GetAllActiveQuests();
+			for (var i in ActiveQuests){
+				var m_Quest:Quest = ActiveQuests[i];
+				if (InRun(m_Quest.m_ID)){
+					m_Timer.SetTitle(string(m_Quest.m_ID));
+					break
+				}
+			}
+		}
 	}
+	
+	
 	public function SaveConfig() {
 		var config:Archive = new Archive();
 		config.AddEntry("StartTime", StartTime);
@@ -90,6 +103,7 @@ class com.fox.SpeedrunTimer.Main {
 		config.AddEntry("RunArchieve", RunArchieve);
 		return config
 	}
+	
 	private function ManualSave() {
 		var mod:GUIModuleIF = GUIModuleIF.FindModuleIF("SpeedrunTimer");
 		var config:Archive = new Archive();
@@ -171,6 +185,13 @@ class com.fox.SpeedrunTimer.Main {
 		}
 		return false
 	}
+	private function inCurrentRun(id:String){
+		for (var i in CurrentRun){
+			var Entry = CurrentRun[i].split("_");
+			if (Entry[0] == id) return true;
+		}
+		return false;
+	}
 	
 	private function CheckBestRun() {
 		var runArray:Array = RunArchieve.FindEntryArray(StartValue + EndValue);
@@ -211,7 +232,6 @@ class com.fox.SpeedrunTimer.Main {
 		StartTime = undefined;
 		m_Timer.ClearTimer();
 		m_Timer = undefined;
-		OtherQuests = undefined;
 		ManualSave();
 	}
 
