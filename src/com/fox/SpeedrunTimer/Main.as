@@ -4,7 +4,6 @@ import com.GameInterface.GUIModuleIF;
 import com.GameInterface.LogBase;
 import com.GameInterface.Quest;
 import com.GameInterface.QuestsBase;
-import com.GameInterface.Utils;
 import com.Utils.Archive;
 import com.fox.SpeedrunTimer.Timer;
 import flash.geom.Point;
