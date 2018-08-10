@@ -193,7 +193,7 @@ class com.fox.SpeedrunTimer.Main {
 	}
 	
 	private function CheckBestRun() {
-		var runArray:Array = RunArchieve.FindEntryArray(StartValue + EndValue);
+		var runArray:Array = RunArchieve.FindEntryArray(StartValue + OtherQuests.join("") + EndValue);
 		var replace;
 		var newEntry:Array = CurrentRun[CurrentRun.length-1].split("_");
 		var LastEntry:Array;
@@ -207,9 +207,9 @@ class com.fox.SpeedrunTimer.Main {
 			replace = true;
 		}
 		if (replace || !LastEntry || !newEntry) {
-			RunArchieve.DeleteEntry(StartValue + EndValue);
+			RunArchieve.DeleteEntry(StartValue + OtherQuests.join("") + EndValue);
 			for (var i:Number = 0; i < CurrentRun.length; i++) {
-				RunArchieve.AddEntry(StartValue + EndValue, CurrentRun[i]);
+				RunArchieve.AddEntry(StartValue + OtherQuests.join("") + EndValue, CurrentRun[i]);
 			}
 		}
 	}
@@ -221,7 +221,7 @@ class com.fox.SpeedrunTimer.Main {
 		m_Timer.CreateTimer();
 		m_Timer.SignalClear.Connect(RemoveTimer, this);
 		m_Timer.SetStartTime(StartTime);
-		m_Timer.SetArchieve(RunArchieve.FindEntryArray(StartValue + EndValue));
+		m_Timer.SetArchieve(RunArchieve.FindEntryArray(StartValue + OtherQuests.join("") + EndValue));
 		ManualSave();
 	}
 

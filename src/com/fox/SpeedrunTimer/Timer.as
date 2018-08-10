@@ -146,19 +146,18 @@ class com.fox.SpeedrunTimer.Timer {
 	}
 
 	private function CreateSectionEntry(key:String, newEntry:Boolean) {
-		var m_QuestID = key.slice(0, 4);
-		var m_TierID = key.slice(4, 9);
+		var QuestKey = key.split("_")[0];
+		var time = key.split("_")[1];
+		
+		var m_QuestID = QuestKey.slice(0, 4);
+		var m_TierID = QuestKey.slice(4);
 		var TierText:String;
 		TierText = LDBFormat.LDBGetText("QuestGoalNames", Number(m_TierID));
-		if (!TierText) {
-			m_TierID = key.slice(4, 8);
-			TierText = LDBFormat.LDBGetText("QuestGoalNames", m_TierID);
-		}
 		if (!TierText) TierText = key.split("_")[0];
-		var time = key.split("_")[1];
+		
 
 		var EntriesBase:MovieClip = m_SectionClip.Entries;
-		var Entry:MovieClip = EntriesBase.createEmptyMovieClip(key.split("_")[0], EntriesBase.getNextHighestDepth());
+		var Entry:MovieClip = EntriesBase.createEmptyMovieClip(QuestKey, EntriesBase.getNextHighestDepth());
 		Entry.msTime = time;
 		Entry._y = Entries.length * 20;
 
