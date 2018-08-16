@@ -107,9 +107,9 @@ class com.fox.SpeedrunTimer.Main {
 
 		DValDebug.SetValue(config.FindEntry("Debug"), false);
 
-		DValVisibleEntries.SetValue(config.FindEntry("VisibleEntries"), 2);
+		DValVisibleEntries.SetValue(config.FindEntry("VisibleEntries",2));
 		TimerPos = config.FindEntry("m_TimerPos");
-		RunArchieve.SetValue(config.FindEntry("RunArchieve",new Archive()));
+		RunArchieve.SetValue(config.FindEntry("RunArchieves",new Archive()));
 		if (!TimerPos) {
 			var x = DistributedValueBase.GetDValue("ScryTimerX");
 			var y = DistributedValueBase.GetDValue("ScryTimerY");
@@ -151,7 +151,7 @@ class com.fox.SpeedrunTimer.Main {
 		config.AddEntry("End", EndValue);
 		config.AddEntry("Debug", DValDebug.GetValue());
 		config.AddEntry("m_TimerPos", TimerPos);
-		config.AddEntry("RunArchieve", RunArchieve.GetValue());
+		config.AddEntry("RunArchieves", RunArchieve.GetValue());
 		return config
 	}
 
@@ -171,7 +171,7 @@ class com.fox.SpeedrunTimer.Main {
 		config.AddEntry("End", EndValue);
 		config.AddEntry("Debug", DValDebug.GetValue());
 		config.AddEntry("m_TimerPos", TimerPos);
-		config.AddEntry("RunArchieve", RunArchieve.GetValue());
+		config.AddEntry("RunArchieves", RunArchieve.GetValue());
 		mod.StoreConfig(config);
 	}
 

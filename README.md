@@ -33,7 +33,7 @@ To restore mission back to In the Dusty Dark you can use `/option Speedrun_Defau
 *Other commands*  
 This mod has to store lots of data in order to remember all previous runs. In case user preference files become too large you can use `/option Speedrun_ResetData true` command to purge all the old runs from your preference files, it's probably not necessary though.  
 
-You can use `/option Speedrun_VisibleEntries x` to change how many previous AND next section entries are shown on the timer window. Default value is two.  
+You can use `/option Speedrun_VisibleEntries x` to change how many previous AND next section entries are shown on the timer window. Default value is two (5total).  
 
 Whole mod can be turned off with `/option Speedrun_Enabled true/false` command.  
 

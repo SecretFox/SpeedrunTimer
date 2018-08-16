@@ -253,6 +253,11 @@ class com.fox.SpeedrunTimer.Timer {
 			Entries[i]._y = 0;
 		}
 		var EntriesShown = DistributedValueBase.GetDValue("Speedrun_VisibleEntries");
+		if (isNaN(EntriesShown)){
+			EntriesShown = 2;
+			DistributedValueBase.SetDValue("Speedrun_VisibleEntries", 2);
+			return
+		}
 		for (var i = 0; i <= EntriesShown;i++ ){
 			var clip:MovieClip = Entries[index - i];
 			if (!clip) clip =  Entries[index + EntriesShown + i]
