@@ -6,7 +6,7 @@
 		depth_layer = "Middle"
 		sub_depth   = "2"
 		variable    = "Speedrun_Enabled"
-		criteria    = "Speedrun_Enabled &amp;&amp; (guimode &amp; (GUIMODEFLAGS_INPLAY | GUIMODEFLAGS_ENABLEALLGUI))"
+		criteria    = "Speedrun_Enabled &amp;&amp; (guimode &amp; (GUIMODEFLAGS_INPLAY | GUIMODEFLAGS_ENABLEALLGUI | GUIMODEFLAGS_CINEMATICS | GUIMODEFLAGS_SPLASHSCREEN))"
 		config_name = "Speedrun_Cfg"
 	/>
 </Root>
