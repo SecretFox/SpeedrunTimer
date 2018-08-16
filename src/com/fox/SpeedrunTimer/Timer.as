@@ -186,12 +186,12 @@ class com.fox.SpeedrunTimer.Timer {
 		Time.embedFonts = true;
 		Time.setNewTextFormat(HeaderFormat);
 		Time.selectable = false;
-		if (newEntry) Time.text = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.round(time / 60000), Math.round(time / 1000) % 60);
+		if (newEntry) Time.text = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(time / 60000), Math.floor(time / 1000) % 60);
 
 		Best.embedFonts = true;
 		Best.setNewTextFormat(HeaderFormat);
 		Best.selectable = false;
-		Best.text =  com.Utils.Format.Printf( "%02.0f:%02.0f", Math.round(time / 60000), Math.round(time / 1000) % 60 );
+		Best.text =  com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(time / 60000), Math.floor(time / 1000) % 60 );
 
 		Diff.embedFonts = true;
 		Diff.setNewTextFormat(HeaderFormat);
@@ -203,7 +203,7 @@ class com.fox.SpeedrunTimer.Timer {
 	}
 
 	public function DisplayFinalTime(time:Number) {
-		var TimeString = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.round(time / 60000), Math.round(time / 1000) % 60 );
+		var TimeString = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(time / 60000), Math.floor(time / 1000) % 60 );
 		m_TimerContent.Title.text += "\n" + TimeString +" (" + time / 1000 + "s)";
 		Counter.text = TimeString;
 		RedrawBG();
@@ -306,15 +306,15 @@ class com.fox.SpeedrunTimer.Timer {
 			var Entry:MovieClip = Entries[i];
 			if (Entry._name == key) {
 				Found = i;
-				Entry.Time.text = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.round(time / 60000), Math.round(time / 1000) % 60);
+				Entry.Time.text = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(time / 60000), Math.floor(time / 1000) % 60);
 				if (Entry.Time.text && Entry.Best.text) {
 					var difference = Math.round((Entry.msTime-time) / 1000);
 					if (difference > 0) {
 						Entry.Diff.textColor = 0x00C60F;
-						Entry.Diff.text = "-"+com.Utils.Format.Printf( "%02.0f:%02.0f", Math.round(difference / 60), Math.round(difference % 60));
+						Entry.Diff.text = "-"+com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(difference / 60), Math.floor(difference % 60));
 					} else if (difference < 0) {
 						Entry.Diff.textColor = 0xC60000;
-						Entry.Diff.text = "+"+com.Utils.Format.Printf( "%02.0f:%02.0f", Math.abs(difference / 60), Math.round(Math.abs(difference) % 60));
+						Entry.Diff.text = "+"+com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(Math.abs(difference / 60)), Math.floor(Math.abs(difference) % 60));
 					} else {
 						Entry.Diff.textColor = 0xFFFFFF;
 						Entry.Diff.text = " 00:00";
@@ -344,7 +344,7 @@ class com.fox.SpeedrunTimer.Timer {
 		var current:Date = new Date();
 		var currentTime = current.valueOf();
 		var Elapsed = currentTime - StartTime - Offset;
-		Counter.text = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.round(Elapsed / 60000), Math.round(Elapsed/1000) % 60 );
+		Counter.text = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(Elapsed / 60000), Math.floor(Elapsed / 1000) % 60);
 	}
 	
 	public function pausetimer(){

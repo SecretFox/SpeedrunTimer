@@ -340,7 +340,7 @@ class com.fox.SpeedrunTimer.Main {
 		StartTime = undefined;
 	}
 	private function updateSectionTime(key:String, override) {
-		var Elapsed
+		var Elapsed;
 		if (!override) {
 			var current:Date = new Date();
 			Elapsed = current.valueOf() - StartTime - Offset;
