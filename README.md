@@ -1,6 +1,6 @@
 # SpeedrunTimer
 Secret world legends mod to help time speedruns.  
-![alt text](https://i.imgur.com/AeQbVol.png "Example")  
+![alt text](https://raw.githubusercontent.com/SecretFox/SpeedrunTimer/master/Example.png "Example")  
 (Ignore the last section time entry, it's from older version of the mod).  
 	
 By default this mod is configured for "In the Dusty Dark" mission, timer will appear when you approach the first torch and stops on mission completion.  
