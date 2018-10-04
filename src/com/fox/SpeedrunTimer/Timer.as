@@ -33,8 +33,8 @@ class com.fox.SpeedrunTimer.Timer {
 		TimerPos = pos;
 		m_swfRoot = root;
 		SignalClear = new Signal();
-		SectionFormat = new TextFormat("src.asset.FuturaMD_BT.ttf", 14, 0xFFFFFF, false, false, false, null, null, "left");
-		HeaderFormat = new TextFormat("src.asset.FuturaMD_BT.ttf", 14, 0xFFFFFF, false, false, false, null, null, "center");
+		SectionFormat = new TextFormat("src.assets.fonts.FuturaMD_BT.ttf", 14, 0xFFFFFF, false, false, false, null, null, "left");
+		HeaderFormat = new TextFormat("src.assets.fonts.FuturaMD_BT.ttf", 14, 0xFFFFFF, false, false, false, null, null, "center");
 		mouselistener = new Object();
 		mouselistener.onMouseWheel = Delegate.create(this, ScrollWheel);
 	}
@@ -59,7 +59,7 @@ class com.fox.SpeedrunTimer.Timer {
 		m_Timer = m_swfRoot.createEmptyMovieClip("m_Timer", m_swfRoot.getNextHighestDepth());
 		var bg = m_Timer.createEmptyMovieClip("BG", m_Timer.getNextHighestDepth());
 		m_TimerContent = m_Timer.createEmptyMovieClip("m_TimerContent", m_Timer.getNextHighestDepth());
-		var Closebutton:MovieClip = m_Timer.attachMovie("src.asset.CloseButton.png", "Close", m_Timer.getNextHighestDepth());
+		var Closebutton:MovieClip = m_Timer.attachMovie("src.assets.CloseButton.png", "Close", m_Timer.getNextHighestDepth());
 
 		Closebutton._alpha = 80;
 		m_TimerContent._x = 5;
@@ -68,7 +68,7 @@ class com.fox.SpeedrunTimer.Timer {
 		m_Timer._y = TimerPos.y;
 
 		Counter = m_TimerContent.createTextField("Counter", m_TimerContent.getNextHighestDepth(), 0, 6, 140, 60);
-		var format:TextFormat = new TextFormat("src.asset.Russell Square Regular.ttf", 34, 0xFFFFFF, false, false, false, null, null, "center");
+		var format:TextFormat = new TextFormat("src.assets.fonts.Russell Square Regular.ttf", 34, 0xFFFFFF, false, false, false, null, null, "center");
 		Counter.setTextFormat(format);
 		Counter.setNewTextFormat(format);
 		Counter.selectable = false;

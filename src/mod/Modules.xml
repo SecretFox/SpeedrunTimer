@@ -3,10 +3,10 @@
 	<Module  name = "SpeedrunTimer"
 		movie       = "Speedrun\SpeedrunTimer.swf"
 		flags       = "GMF_CFG_STORE_USER_CONFIG | GMF_DONT_UNLOAD"
-		depth_layer = "Middle"
+		depth_layer = "Top"
 		sub_depth   = "2"
 		variable    = "Speedrun_Enabled"
-		criteria    = "Speedrun_Enabled &amp;&amp; (guimode &amp; (GUIMODEFLAGS_INPLAY | GUIMODEFLAGS_ENABLEALLGUI | GUIMODEFLAGS_CINEMATICS | GUIMODEFLAGS_SPLASHSCREEN))"
+		criteria    = "Speedrun_Enabled &amp;&amp; (guimode &amp; (GUIMODEFLAGS_INPLAY | GUIMODEFLAGS_ENABLEALLGUI))"
 		config_name = "Speedrun_Cfg"
 	/>
 </Root>
