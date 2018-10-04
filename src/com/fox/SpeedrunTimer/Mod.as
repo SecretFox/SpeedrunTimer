@@ -361,10 +361,11 @@ class com.fox.SpeedrunTimer.Mod {
 			m_Timer = new Timer(m_swfroot, TimerPos);
 			m_Timer.CreateTimer();
 			m_Timer.SignalClear.Connect(RemoveTimer, this);
-			m_Timer.SetArchieve(entry.split("||"));
+			var data:Array = entry.split("||");
+			m_Timer.SetArchieve(data);
 			m_Timer.SetTitle(val);
 			m_Timer.StopTimer();
-			m_Timer.DisplayFinalTime();
+			m_Timer.DisplayFinalTime(data.pop().split("_")[1]);
 		}
 	}
 	private function NameFromKey(key){

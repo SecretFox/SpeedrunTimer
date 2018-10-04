@@ -209,7 +209,6 @@ class com.fox.SpeedrunTimer.Timer {
 			var TimeString = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(time / 60000), Math.round(time / 1000) % 60 );
 			m_TimerContent.Title.text += "\n" + TimeString +" (" + time / 1000 + "s)";
 			Counter.text = TimeString;
-
 		} else {
 			time = Entries[Entries.length - 1].msTime;
 			var TimeString = com.Utils.Format.Printf( "%02.0f:%02.0f", Math.floor(time / 60000), Math.round(time / 1000) % 60 );
