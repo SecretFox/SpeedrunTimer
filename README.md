@@ -13,11 +13,12 @@ Checkboxes
 * All zones: Whether to display quests from all zones or only current zone on the mission list.  
 
 Buttons  
-* Activate: Sets the selected quest as active, meaning the timer will start when you pickup that quest.
+* Activate: Sets the selected speedrun as active, meaning the timer will start when you start that quest.
+Not needed if using Autoset.
 * View: Views best personal time for the selected quest
-* Upload: Uploads the selected quest to https://secretfox.pythonanywhere.com/speedrun 
+* Upload: Uploads the selected speedrun to https://secretfox.pythonanywhere.com/speedrun 
 * Upload All: Uploads all quests to https://secretfox.pythonanywhere.com/speedrun 
-* Delete: Deletes selected quest from the list
+* Delete: Deletes selected speedrun
 * Split Times: Amount of previous AND next time to display on the timer
 * Check for Updates: Checks if mod has any updates available
 
