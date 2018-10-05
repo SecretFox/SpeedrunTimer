@@ -1,5 +1,4 @@
 # SpeedrunTimer
-Secret world legends mod to help time speedruns.  
 ![alt text](https://raw.githubusercontent.com/SecretFox/SpeedrunTimer/master/Example.png "Example")  
 
 Mod settings can be access accessed through the clock icon on topbar.  
