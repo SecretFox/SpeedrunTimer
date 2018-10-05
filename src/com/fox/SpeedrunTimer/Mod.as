@@ -304,7 +304,7 @@ class com.fox.SpeedrunTimer.Mod {
 					}
 				}
 			}
-			Feedback(QuestsBase.GetQuest(Number(StartValue.slice(0, 4))).m_MissionName + " set as active", true)
+			Feedback(QuestsBase.GetQuest(Number(StartValue.slice(0, 4))).m_MissionName + " set as active")
 			dv.SetValue(false);
 		}
 	}
@@ -395,7 +395,7 @@ class com.fox.SpeedrunTimer.Mod {
 	}
 	public function GetRunsAsList(all:Boolean) {
 		var runs:Archive = RunArchieve.GetValue();
-		var runList = new Array();
+		var runList:Array = new Array();
 		var RegionQuests;
 		if(!all){
 			var currentZone:String = LDBFormat.LDBGetText("Playfieldnames", Character.GetClientCharacter().GetPlayfieldID());
@@ -412,10 +412,15 @@ class com.fox.SpeedrunTimer.Mod {
 				if (!found) continue;
 			}
 			var Name = NameFromKey(key);
-			runList.push({Name:Name, key:key})
+			runList.push({Name:Name, Key:key})
 		}
 		runList.sortOn("Name");
-		return runList
+		//overwrite missions with the same name
+		var runObject:Object = new Object();
+		for (var i = 0; i < runList.length; i++){
+			runObject[runList[i]["Name"]] = runList[i]["Key"];
+		}
+		return runObject
 	}
 // Helper func
 	private function IgnoredQuest(QuestID:Number) {

@@ -29,7 +29,7 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 	
 	private var scrollPane:JScrollPane;
 	private var Listbox:JList;
-	private var ListBoxContent:Array;
+	private var ListBoxContent:Object;
 	
 	private var AutoSetCheckBox:JCheckBox;
 	private var AutoUploadCheckbox:JCheckBox;
@@ -177,11 +177,11 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 		}
 	}
 	//Todo; custom cell factory with tooltips
-	public function SetListData(Data:Array){
+	public function SetListData(Data:Object){
 		ListBoxContent = Data;
 		var arr:Array = new Array();
-		for (var i = 0; i < Data.length;i++ ){
-			arr.push(Data[i]["Name"]);
+		for (var i in Data){
+			arr.push(i);
 		}
 		Listbox.setListData(arr);
 		
@@ -210,28 +210,28 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 	}
 //Button actions
 	private function __Activate(button:JButton){
-		var selected = Listbox.getSelectedIndex();
-		if (selected !=-1){
-			m_Mod.DValSet.SetValue(ListBoxContent[selected]["key"].split("|").join(","));
-			__SetText(ListBoxContent[selected]["Name"] + " set as active");
+		var selected = Listbox.getSelectedValue();
+		if (selected){
+			m_Mod.DValSet.SetValue(ListBoxContent[selected].split("|").join(","));
+			__SetText(selected + " set as active");
 		}
 		
 	}
 	private function __Show(){
-		var selected = Listbox.getSelectedIndex();
-		if (selected != -1) m_Mod.ShowRun(ListBoxContent[selected]["key"]);
+		var selected = Listbox.getSelectedValue();
+		if (selected) m_Mod.ShowRun(ListBoxContent[selected]);
 	}
 	private function __Upload(){
-		var selected = Listbox.getSelectedIndex();
-		if (selected !=-1) m_Mod.UploadByKey(ListBoxContent[selected]["key"],ListBoxContent[selected]["Name"])
+		var selected = Listbox.getSelectedValue();
+		if (selected) m_Mod.UploadByKey(ListBoxContent[selected],selected)
 	}
 	private function __UploadAll(){
 		m_Mod.UploadAll()
 	}
 	private function __Delete(){
-		var selected = Listbox.getSelectedIndex();
-		if (selected !=-1) {
-			m_Mod.DeleteKey(ListBoxContent[selected]["key"]);
+		var selected = Listbox.getSelectedValue();
+		if (selected) {
+			m_Mod.DeleteKey(ListBoxContent[selected]);
 			__ZoneChanged(ZoneCheckbox);
 		}
 	}
