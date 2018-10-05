@@ -60,6 +60,13 @@ class com.fox.SpeedrunTimer.Mod {
 
 	static var CHALLENGES:Array = [3995, 3996, 3997, 3998, 3999, 3978, 3979, 3980, 3981, 3982];
 	static var BLACKLISTED:Array = [3451, 4131, 4042, 4043, 4044]//StoneHenge,NYR
+	// Rogue Agent and Into Darkness have different quest and goalID's for different factions
+	// This array converts between them so that any of the ID's will work for starting the speedrun
+	// Quests will also be stored with illuminati ID
+	static var IDCONVERT:Array = [
+		["32751845911,3275","32731845711,3273","32741845811,3274"],
+		["32681847011,3268","32641897011,3264","30951896911,3095"]
+	];
 
 	public static function main(swfRoot:MovieClip) {
 		var s_app:Mod = new Mod(swfRoot);
@@ -200,7 +207,6 @@ class com.fox.SpeedrunTimer.Mod {
 		DrawSettings();
 	}
 
-
 	public function SaveConfig() {
 		var config:Archive = new Archive();
 		config.AddEntry("StartTime", StartTime);
@@ -252,7 +258,6 @@ class com.fox.SpeedrunTimer.Mod {
 	}
 
 //Settings
-	
 	private function DrawSettings(){
 		if (DValSettingsVisible.GetValue()){
 			if(m_settings) m_settings.dispose();
@@ -288,7 +293,18 @@ class com.fox.SpeedrunTimer.Mod {
 				EndValue = string(values.pop());
 				OtherQuests = values;
 			}
-			Feedback(QuestsBase.GetQuest(Number(StartValue.slice(0,4))).m_MissionName + " set as active",true)
+			var FactionTest = StartValue + "," + EndValue;
+			for (var i = 0; i < IDCONVERT.length; i++){
+				for (var y = 0; y < IDCONVERT[i].length; y++){
+					if (IDCONVERT[i][y] == FactionTest){
+						var m_Player:Character = Character.GetClientCharacter();
+						var m_Faction =  m_Player.GetStat(_global.Enums.Stat.e_PlayerFaction);
+						StartValue = IDCONVERT[i][m_Faction-1].split(",")[0];
+						EndValue = IDCONVERT[i][m_Faction-1].split(",")[1];
+					}
+				}
+			}
+			Feedback(QuestsBase.GetQuest(Number(StartValue.slice(0, 4))).m_MissionName + " set as active", true)
 			dv.SetValue(false);
 		}
 	}

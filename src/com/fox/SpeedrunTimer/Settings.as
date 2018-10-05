@@ -168,7 +168,7 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 	}
 	private function Fadeout(){
 		var alpha = tf1.getAlpha();
-		if (alpha > 5){
+		if (alpha > 0){
 			tf1.setAlpha(alpha - 2);
 		}
 		else{
@@ -211,7 +211,11 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 //Button actions
 	private function __Activate(button:JButton){
 		var selected = Listbox.getSelectedIndex();
-		if (selected !=-1) m_Mod.DValSet.SetValue(ListBoxContent[selected]["key"].split("|").join(","));
+		if (selected !=-1){
+			m_Mod.DValSet.SetValue(ListBoxContent[selected]["key"].split("|").join(","));
+			__SetText(ListBoxContent[selected]["Name"] + " set as active");
+		}
+		
 	}
 	private function __Show(){
 		var selected = Listbox.getSelectedIndex();
