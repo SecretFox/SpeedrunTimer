@@ -40,11 +40,9 @@
   </compileTargets>
   <!-- Assets to embed into the output SWF -->
   <library>
-    <asset path="src\assets\fonts\FuturaMD_BT.ttf" />
-    <asset path="src\assets\fonts\Russell Square Regular.ttf" />
     <asset path="src\assets\CloseButton.png" bitmap="False" />
-    <asset path="src\assets\fonts\tahoma.ttf" id="tahoma" />
     <asset path="src\assets\modIcon.png" bitmap="False" />
+    <asset path="src\assets\gfxfontlib.swf" />
   </library>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

@@ -33,8 +33,8 @@ class com.fox.SpeedrunTimer.Timer {
 		TimerPos = pos;
 		m_swfRoot = root;
 		SignalClear = new Signal();
-		SectionFormat = new TextFormat("src.assets.fonts.FuturaMD_BT.ttf", 14, 0xFFFFFF, false, false, false, null, null, "left");
-		HeaderFormat = new TextFormat("src.assets.fonts.FuturaMD_BT.ttf", 14, 0xFFFFFF, false, false, false, null, null, "center");
+		SectionFormat = new TextFormat("_StandardFont", 14, 0xFFFFFF, false, false, false, null, null, "left");
+		HeaderFormat = new TextFormat("_StandardFont", 14, 0xFFFFFF, false, false, false, null, null, "center");
 		mouselistener = new Object();
 		mouselistener.onMouseWheel = Delegate.create(this, ScrollWheel);
 	}
@@ -68,7 +68,7 @@ class com.fox.SpeedrunTimer.Timer {
 		m_Timer._y = TimerPos.y;
 
 		Counter = m_TimerContent.createTextField("Counter", m_TimerContent.getNextHighestDepth(), 0, 6, 140, 60);
-		var format:TextFormat = new TextFormat("src.assets.fonts.Russell Square Regular.ttf", 34, 0xFFFFFF, false, false, false, null, null, "center");
+		var format:TextFormat = new TextFormat("_TimerFont", 34, 0xFFFFFF, false, false, false, null, null, "center");
 		Counter.setTextFormat(format);
 		Counter.setNewTextFormat(format);
 		Counter.selectable = false;

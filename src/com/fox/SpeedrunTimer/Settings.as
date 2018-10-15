@@ -14,7 +14,6 @@ import GUI.fox.aswing.JTextField;
 import GUI.fox.aswing.SoftBoxLayout;
 import GUI.fox.aswing.border.BevelBorder;
 import GUI.fox.aswing.border.LineBorder;
-import GUI.fox.aswing.resizer.Resizer;
 import com.GameInterface.DistributedValueBase;
 import com.fox.SpeedrunTimer.Mod;
 import com.fox.SpeedrunTimer.Uploader;
@@ -51,9 +50,6 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 		m_Mod = that;
 	//window config
 		winPos = pos;
-		var test:Resizer = new Resizer();
-		test.isResizeDirectly(false)
-		setResizer(test)
 		setLocation(pos.x, pos.y);
 		setBorder(new BevelBorder(undefined, BevelBorder.RAISED, new ASColor(0xD8D8D8), new ASColor(0x7C7C7C), new ASColor(0x000000), new ASColor(0x373737), 3));
 		var icon:Icon = new Icon();//Empty icon
