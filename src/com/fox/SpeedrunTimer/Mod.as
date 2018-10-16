@@ -607,7 +607,7 @@ class com.fox.SpeedrunTimer.Mod {
 			StartTime = date.valueOf();
 			Offset = 0;
 			StartTimer();
-		} else if (ProgressStr == EndValue) {
+		} else if (ProgressStr == EndValue && m_Timer.running) {
 			var Final:Date = new Date();
 			var FinalTime = Final.valueOf();
 			var Elapsed = FinalTime - StartTime - Offset;
@@ -641,7 +641,7 @@ class com.fox.SpeedrunTimer.Mod {
 			StartTime = date.valueOf();
 			Offset = 0;
 			StartTimer();
-		} else if (ProgressStr == EndValue) {
+		} else if (ProgressStr == EndValue && m_Timer.running) {
 			var Final:Date = new Date();
 			var FinalTime = Final.valueOf();
 			var Elapsed = FinalTime - StartTime - Offset;
@@ -655,7 +655,7 @@ class com.fox.SpeedrunTimer.Mod {
 
 	private function SloQuestCompleted(QuestID) {
 		if (IgnoredQuest(QuestID)) return;
-		if (string(QuestID) == EndValue) {
+		if (string(QuestID) == EndValue && m_Timer.running) {
 			var Final:Date = new Date();
 			var FinalTime = Final.valueOf();
 			var Elapsed = FinalTime - StartTime - Offset;
