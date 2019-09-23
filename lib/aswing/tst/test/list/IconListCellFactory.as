@@ -1,5 +1,5 @@
-﻿import org.aswing.ListCell;
-import org.aswing.ListCellFactory;
+﻿import GUI.fox.aswing.ListCell;
+import GUI.fox.aswing.ListCellFactory;
 
 import test.list.IconListCell;
 

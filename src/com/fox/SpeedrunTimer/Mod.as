@@ -194,15 +194,20 @@ class com.fox.SpeedrunTimer.Mod {
 			}
 		}
 		if (m_Timer) {
+			var found = false;
 			var ActiveQuests = QuestsBase.GetAllActiveQuests();
 			for (var i in ActiveQuests) {
 				var m_Quest:Quest = ActiveQuests[i];
 				if (InRun(m_Quest.m_ID)) {
+					found = true;
 					m_Timer.SetTitle(string(m_Quest.m_ID));
 					break
 				}
 			}
 			m_Timer.Offset = Offset;
+			if (!found){
+				SloQuestCompleted(Number(StartValue.slice(0, 4)));
+			}
 		}
 		DrawSettings();
 	}

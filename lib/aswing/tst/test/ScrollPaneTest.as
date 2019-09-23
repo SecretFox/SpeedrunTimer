@@ -2,16 +2,16 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
  
-import org.aswing.BorderLayout;
-import org.aswing.ButtonGroup;
-import org.aswing.JButton;
-import org.aswing.JCheckBox;
-import org.aswing.JPanel;
-import org.aswing.JRadioButton;
-import org.aswing.JScrollPane;
-import org.aswing.JToggleButton;
-import org.aswing.JViewport;
-import org.aswing.MCPanel;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.ButtonGroup;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JCheckBox;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JRadioButton;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JToggleButton;
+import GUI.fox.aswing.JViewport;
+import GUI.fox.aswing.MCPanel;
  
 /**
  *

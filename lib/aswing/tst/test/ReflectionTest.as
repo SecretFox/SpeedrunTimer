@@ -1,6 +1,6 @@
-import org.aswing.util.Reflection;
-import org.aswing.geom.Point;
-import org.aswing.ASColor;
+import GUI.fox.aswing.util.Reflection;
+import GUI.fox.aswing.geom.Point;
+import GUI.fox.aswing.ASColor;
 /**
  * @author Igor Sadovskiy
  */

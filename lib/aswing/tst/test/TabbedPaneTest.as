@@ -1,24 +1,24 @@
 ﻿/*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.ASColor;
-import org.aswing.border.BevelBorder;
-import org.aswing.border.EmptyBorder;
-import org.aswing.border.LineBorder;
-import org.aswing.BorderLayout;
-import org.aswing.Container;
-import org.aswing.Insets;
-import org.aswing.JButton;
-import org.aswing.JCheckBox;
-import org.aswing.JFrame;
-import org.aswing.JLabel;
-import org.aswing.JPanel;
-import org.aswing.JRadioButton;
-import org.aswing.JScrollPane;
-import org.aswing.JTabbedPane;
-import org.aswing.JTextArea;
-import org.aswing.JTextField;
-import org.aswing.SoftBox;
+import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.border.BevelBorder;
+import GUI.fox.aswing.border.EmptyBorder;
+import GUI.fox.aswing.border.LineBorder;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.Container;
+import GUI.fox.aswing.Insets;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JCheckBox;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JLabel;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JRadioButton;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JTabbedPane;
+import GUI.fox.aswing.JTextArea;
+import GUI.fox.aswing.JTextField;
+import GUI.fox.aswing.SoftBox;
 
 import test.ColorIcon;
 

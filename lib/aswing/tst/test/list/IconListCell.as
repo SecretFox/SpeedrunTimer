@@ -1,5 +1,5 @@
-﻿import org.aswing.ASColor;
-import org.aswing.DefaultListCell;
+﻿import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.DefaultListCell;
 
 import test.CircleIcon;
 import test.ColorIcon;

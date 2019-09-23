@@ -1,6 +1,6 @@
-import org.aswing.JCheckBox;
-import org.aswing.JFrame;
-import org.aswing.SoftBox;
+import GUI.fox.aswing.JCheckBox;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.SoftBox;
 
 /**
  * @author iiley

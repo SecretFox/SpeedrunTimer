@@ -2,21 +2,21 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.BorderLayout;
-import org.aswing.ButtonGroup;
-import org.aswing.JCheckBoxMenuItem;
-import org.aswing.JFrame;
-import org.aswing.JMenu;
-import org.aswing.JMenuBar;
-import org.aswing.JMenuItem;
-import org.aswing.JOptionPane;
-import org.aswing.JRadioButtonMenuItem;
-import org.aswing.JScrollPane;
-import org.aswing.JSeparator;
-import org.aswing.JTextArea;
-import org.aswing.KeyboardManager;
-import org.aswing.KeySequence;
-import org.aswing.KeyStroke;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.ButtonGroup;
+import GUI.fox.aswing.JCheckBoxMenuItem;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JMenu;
+import GUI.fox.aswing.JMenuBar;
+import GUI.fox.aswing.JMenuItem;
+import GUI.fox.aswing.JOptionPane;
+import GUI.fox.aswing.JRadioButtonMenuItem;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JSeparator;
+import GUI.fox.aswing.JTextArea;
+import GUI.fox.aswing.KeyboardManager;
+import GUI.fox.aswing.KeySequence;
+import GUI.fox.aswing.KeyStroke;
 
 /**
  * @author iiley

@@ -2,10 +2,10 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.Component;
-import org.aswing.geom.Dimension;
-import org.aswing.geom.Point;
-import org.aswing.JViewport;
+import GUI.fox.aswing.Component;
+import GUI.fox.aswing.geom.Dimension;
+import GUI.fox.aswing.geom.Point;
+import GUI.fox.aswing.JViewport;
 
 /**
  * @author iiley

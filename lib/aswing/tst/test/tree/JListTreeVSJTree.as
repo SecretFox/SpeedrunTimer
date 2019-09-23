@@ -2,17 +2,17 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.border.TitledBorder;
-import org.aswing.BoxLayout;
-import org.aswing.Container;
-import org.aswing.GeneralListCellFactory;
-import org.aswing.JFrame;
-import org.aswing.JListTree;
-import org.aswing.JScrollPane;
-import org.aswing.JTree;
-import org.aswing.tree.DefaultMutableTreeNode;
-import org.aswing.tree.DefaultTreeModel;
-import org.aswing.tree.TreeModel;
+import GUI.fox.aswing.border.TitledBorder;
+import GUI.fox.aswing.BoxLayout;
+import GUI.fox.aswing.Container;
+import GUI.fox.aswing.GeneralListCellFactory;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JListTree;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JTree;
+import GUI.fox.aswing.tree.DefaultMutableTreeNode;
+import GUI.fox.aswing.tree.DefaultTreeModel;
+import GUI.fox.aswing.tree.TreeModel;
 
 import test.tree.IconListTreeCell;
 

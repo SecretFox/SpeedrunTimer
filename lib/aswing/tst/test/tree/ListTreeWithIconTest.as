@@ -1,13 +1,13 @@
 ﻿/*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.BorderLayout;
-import org.aswing.GeneralListCellFactory;
-import org.aswing.JButton;
-import org.aswing.JFrame;
-import org.aswing.JListTree;
-import org.aswing.JPanel;
-import org.aswing.JScrollPane;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.GeneralListCellFactory;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JListTree;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JScrollPane;
 
 import test.tree.IconListTreeCell;
 

@@ -1,13 +1,13 @@
-﻿import org.aswing.border.LineBorder;
-import org.aswing.BorderLayout;
-import org.aswing.FlowLayout;
-import org.aswing.JButton;
-import org.aswing.JFrame;
-import org.aswing.JList;
-import org.aswing.JPanel;
-import org.aswing.JScrollPane;
-import org.aswing.ListCell;
-import org.aswing.VectorListModel;
+﻿import GUI.fox.aswing.border.LineBorder;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.FlowLayout;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JList;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.ListCell;
+import GUI.fox.aswing.VectorListModel;
 
 import test.list.IconListCellFactory;
 
@@ -88,7 +88,7 @@ class test.ListTest extends JFrame {
         Stage.align = "T";
         try{
             trace("try ListTest");
-            //org.aswing.Component.setDefaultCachePreferSizes(false);
+            //GUI.fox.aswing.Component.setDefaultCachePreferSizes(false);
             //UIManager.setLookAndFeel(new XlandsLookAndFeel());
             var p:ListTest = new ListTest();
             p.setLocation(50, 50);

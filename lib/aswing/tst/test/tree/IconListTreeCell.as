@@ -2,9 +2,9 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.Icon;
-import org.aswing.tree.list.DefaultListTreeCell;
-import org.aswing.tree.TreePath;
+import GUI.fox.aswing.Icon;
+import GUI.fox.aswing.tree.list.DefaultListTreeCell;
+import GUI.fox.aswing.tree.TreePath;
 
 import test.tree.ListTreeBranchIcon;
 import test.tree.ListTreeLeafIcon;

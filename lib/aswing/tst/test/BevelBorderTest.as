@@ -1,10 +1,10 @@
-﻿import org.aswing.ASColor;
-import org.aswing.border.BevelBorder;
-import org.aswing.BorderLayout;
-import org.aswing.Container;
-import org.aswing.JButton;
-import org.aswing.JFrame;
-import org.aswing.JPanel;
+﻿import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.border.BevelBorder;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.Container;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JPanel;
 
 /**
  * @author iiley

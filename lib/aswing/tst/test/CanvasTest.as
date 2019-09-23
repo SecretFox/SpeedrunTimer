@@ -1,8 +1,8 @@
 ﻿/*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.JPanel;
-import org.aswing.JWindow;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JWindow;
 
 /**
  * @author iiley

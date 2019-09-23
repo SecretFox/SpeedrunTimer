@@ -2,9 +2,9 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.colorchooser.JColorSwatches;
-import org.aswing.FlowLayout;
-import org.aswing.JFrame;
+import GUI.fox.aswing.colorchooser.JColorSwatches;
+import GUI.fox.aswing.FlowLayout;
+import GUI.fox.aswing.JFrame;
 
 /**
  * @author iiley

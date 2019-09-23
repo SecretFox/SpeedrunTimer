@@ -1,14 +1,14 @@
 ﻿/*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.Component;
-import org.aswing.Container;
-import org.aswing.geom.Dimension;
-import org.aswing.geom.Point;
-import org.aswing.geom.Rectangle;
-import org.aswing.Insets;
-import org.aswing.JViewport;
-import org.aswing.ViewportLayout;
+import GUI.fox.aswing.Component;
+import GUI.fox.aswing.Container;
+import GUI.fox.aswing.geom.Dimension;
+import GUI.fox.aswing.geom.Point;
+import GUI.fox.aswing.geom.Rectangle;
+import GUI.fox.aswing.Insets;
+import GUI.fox.aswing.JViewport;
+import GUI.fox.aswing.ViewportLayout;
 
 /**
  * <code>CenterViewportLayout</code> acts like usual <code>ViewportLayout</code>,

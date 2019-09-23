@@ -1,9 +1,9 @@
-﻿import org.aswing.ASFont;
-import org.aswing.border.BevelBorder;
-import org.aswing.BorderLayout;
-import org.aswing.JFrame;
-import org.aswing.JProgressBar;
-import org.aswing.JScrollBar;
+﻿import GUI.fox.aswing.ASFont;
+import GUI.fox.aswing.border.BevelBorder;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JProgressBar;
+import GUI.fox.aswing.JScrollBar;
 /**
  * @author iiley
  */

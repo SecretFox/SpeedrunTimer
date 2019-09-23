@@ -1,13 +1,13 @@
 ﻿ /**
 * @author firdosh
 */
-import org.aswing.AttachIcon;
-import org.aswing.BorderLayout;
-import org.aswing.FlowLayout;
-import org.aswing.JButton;
-import org.aswing.JFrame;
-import org.aswing.JLabel;
-import org.aswing.JPanel;
+import GUI.fox.aswing.AttachIcon;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.FlowLayout;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JLabel;
+import GUI.fox.aswing.JPanel;
 
 class test.MessageBox extends JFrame
 {

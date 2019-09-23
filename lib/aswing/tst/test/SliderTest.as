@@ -2,10 +2,10 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.BorderLayout;
-import org.aswing.JFrame;
-import org.aswing.JLabel;
-import org.aswing.JSlider;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JLabel;
+import GUI.fox.aswing.JSlider;
 
 /**
  * @author iiley

@@ -2,14 +2,14 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.BorderLayout;
-import org.aswing.JButton;
-import org.aswing.JFrame;
-import org.aswing.JPanel;
-import org.aswing.JScrollPane;
-import org.aswing.JTree;
-import org.aswing.tree.DefaultMutableTreeNode;
-import org.aswing.tree.DefaultTreeModel;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JTree;
+import GUI.fox.aswing.tree.DefaultMutableTreeNode;
+import GUI.fox.aswing.tree.DefaultTreeModel;
 
 import test.tree.Item;
 

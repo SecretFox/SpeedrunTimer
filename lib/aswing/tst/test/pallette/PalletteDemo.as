@@ -2,19 +2,19 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.ASColor;
-import org.aswing.ASWingUtils;
-import org.aswing.border.BevelBorder;
-import org.aswing.colorchooser.ColorRectIcon;
-import org.aswing.colorchooser.JColorSwatches;
-import org.aswing.FlowLayout;
-import org.aswing.geom.Point;
-import org.aswing.JButton;
-import org.aswing.JColorChooser;
-import org.aswing.JFrame;
-import org.aswing.JWindow;
-import org.aswing.MouseManager;
-import org.aswing.util.Delegate;
+import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.ASWingUtils;
+import GUI.fox.aswing.border.BevelBorder;
+import GUI.fox.aswing.colorchooser.ColorRectIcon;
+import GUI.fox.aswing.colorchooser.JColorSwatches;
+import GUI.fox.aswing.FlowLayout;
+import GUI.fox.aswing.geom.Point;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JColorChooser;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JWindow;
+import GUI.fox.aswing.MouseManager;
+import GUI.fox.aswing.util.Delegate;
 
 /**
  * @author iiley

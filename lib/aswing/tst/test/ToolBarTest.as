@@ -1,15 +1,15 @@
 ﻿/*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.ASColor;
-import org.aswing.BorderLayout;
-import org.aswing.Insets;
-import org.aswing.JButton;
-import org.aswing.JCheckBox;
-import org.aswing.JFrame;
-import org.aswing.JRadioButton;
-import org.aswing.JToggleButton;
-import org.aswing.JToolBar;
+import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.Insets;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JCheckBox;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JRadioButton;
+import GUI.fox.aswing.JToggleButton;
+import GUI.fox.aswing.JToolBar;
 
 import test.ColorIcon;
 

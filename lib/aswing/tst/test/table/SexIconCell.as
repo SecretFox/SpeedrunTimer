@@ -1,9 +1,9 @@
 ﻿/*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.ASColor;
-import org.aswing.Icon;
-import org.aswing.table.DefaultTextCell;
+import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.Icon;
+import GUI.fox.aswing.table.DefaultTextCell;
 
 import test.CircleIcon;
 import test.ColorIcon;

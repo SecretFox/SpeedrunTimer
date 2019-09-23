@@ -2,20 +2,20 @@
 /*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.ASColor;
-import org.aswing.border.EmptyBorder;
-import org.aswing.border.LineBorder;
-import org.aswing.BorderLayout;
-import org.aswing.DefaultComboBoxCellEditor;
-import org.aswing.Insets;
-import org.aswing.JButton;
-import org.aswing.JFrame;
-import org.aswing.JScrollPane;
-import org.aswing.JTable;
-import org.aswing.table.DefaultTableModel;
-import org.aswing.table.GeneralTableCellFactory;
-import org.aswing.table.sorter.TableSorter;
-import org.aswing.util.Timer;
+import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.border.EmptyBorder;
+import GUI.fox.aswing.border.LineBorder;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.DefaultComboBoxCellEditor;
+import GUI.fox.aswing.Insets;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JTable;
+import GUI.fox.aswing.table.DefaultTableModel;
+import GUI.fox.aswing.table.GeneralTableCellFactory;
+import GUI.fox.aswing.table.sorter.TableSorter;
+import GUI.fox.aswing.util.Timer;
 
 import test.table.SexIconCell;
 /**

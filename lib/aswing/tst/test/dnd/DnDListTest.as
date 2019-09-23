@@ -2,18 +2,18 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.border.TitledBorder;
-import org.aswing.BoxLayout;
-import org.aswing.Component;
-import org.aswing.Container;
-import org.aswing.dnd.DragManager;
-import org.aswing.dnd.SourceData;
-import org.aswing.geom.Point;
-import org.aswing.JFrame;
-import org.aswing.JList;
-import org.aswing.JPanel;
-import org.aswing.JScrollPane;
-import org.aswing.JTextArea;
+import GUI.fox.aswing.border.TitledBorder;
+import GUI.fox.aswing.BoxLayout;
+import GUI.fox.aswing.Component;
+import GUI.fox.aswing.Container;
+import GUI.fox.aswing.dnd.DragManager;
+import GUI.fox.aswing.dnd.SourceData;
+import GUI.fox.aswing.geom.Point;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JList;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JTextArea;
 
 /**
  * @author iiley

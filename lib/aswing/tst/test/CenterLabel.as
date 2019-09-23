@@ -1,7 +1,7 @@
-import org.aswing.ASFont;
-import org.aswing.BorderLayout;
-import org.aswing.JFrame;
-import org.aswing.JLabel;
+import GUI.fox.aswing.ASFont;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JLabel;
 
 /**
  * @author iiley

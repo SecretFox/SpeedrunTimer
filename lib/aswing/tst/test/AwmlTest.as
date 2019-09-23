@@ -1,13 +1,13 @@
 /*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.awml.AwmlLoader;
-import org.aswing.awml.AwmlManager;
-import org.aswing.DefaultComboBoxCellEditor;
-import org.aswing.JFrame;
-import org.aswing.JTable;
-import org.aswing.JWindow;
-import org.aswing.JPopup;
+import GUI.fox.aswing.awml.AwmlLoader;
+import GUI.fox.aswing.awml.AwmlManager;
+import GUI.fox.aswing.DefaultComboBoxCellEditor;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JTable;
+import GUI.fox.aswing.JWindow;
+import GUI.fox.aswing.JPopup;
 
 /**
  * AWML test class.

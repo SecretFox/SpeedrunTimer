@@ -1,17 +1,17 @@
 ﻿/*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.BorderLayout;
-import org.aswing.GeneralListCellFactory;
-import org.aswing.JButton;
-import org.aswing.JFrame;
-import org.aswing.JListTree;
-import org.aswing.JPanel;
-import org.aswing.JScrollPane;
-import org.aswing.tree.DefaultMutableTreeNode;
-import org.aswing.tree.DefaultTreeModel;
-import org.aswing.tree.list.DefaultListTreeCell;
-import org.aswing.tree.TreeModel;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.GeneralListCellFactory;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JListTree;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.tree.DefaultMutableTreeNode;
+import GUI.fox.aswing.tree.DefaultTreeModel;
+import GUI.fox.aswing.tree.list.DefaultListTreeCell;
+import GUI.fox.aswing.tree.TreeModel;
 
 /**
  * @author iiley

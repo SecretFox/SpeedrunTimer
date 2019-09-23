@@ -1,19 +1,19 @@
 ﻿
-import org.aswing.ASColor;
-import org.aswing.border.EmptyBorder;
-import org.aswing.border.TitledBorder;
-import org.aswing.BorderLayout;
-import org.aswing.Container;
-import org.aswing.FlowLayout;
-import org.aswing.Insets;
-import org.aswing.JButton;
-import org.aswing.JFrame;
-import org.aswing.JPanel;
-import org.aswing.JScrollPane;
-import org.aswing.JTextArea;
-import org.aswing.JTextComponent;
-import org.aswing.JTextField;
-import org.aswing.MCPanel;
+import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.border.EmptyBorder;
+import GUI.fox.aswing.border.TitledBorder;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.Container;
+import GUI.fox.aswing.FlowLayout;
+import GUI.fox.aswing.Insets;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JTextArea;
+import GUI.fox.aswing.JTextComponent;
+import GUI.fox.aswing.JTextField;
+import GUI.fox.aswing.MCPanel;
 
 /**
  *

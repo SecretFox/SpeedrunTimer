@@ -1,16 +1,16 @@
 /*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.BorderLayout;
-import org.aswing.JButton;
-import org.aswing.JWindow;
-import org.aswing.MCPanel;
-import org.aswing.JFrame;
-import org.aswing.WindowManager;
-import org.aswing.WindowPane;
-import org.aswing.CenterLayout;
-import org.aswing.BoxLayout;
-import org.aswing.LayoutManager;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JWindow;
+import GUI.fox.aswing.MCPanel;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.WindowManager;
+import GUI.fox.aswing.WindowPane;
+import GUI.fox.aswing.CenterLayout;
+import GUI.fox.aswing.BoxLayout;
+import GUI.fox.aswing.LayoutManager;
 
 /**
  *

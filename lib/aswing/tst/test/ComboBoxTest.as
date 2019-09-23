@@ -1,10 +1,10 @@
-﻿import org.aswing.BorderLayout;
-import org.aswing.JButton;
-import org.aswing.JComboBox;
-import org.aswing.JFrame;
-import org.aswing.JPanel;
-import org.aswing.JTextField;
-import org.aswing.VectorListModel;
+﻿import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JComboBox;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JTextField;
+import GUI.fox.aswing.VectorListModel;
 
 /**
  * @author iiley

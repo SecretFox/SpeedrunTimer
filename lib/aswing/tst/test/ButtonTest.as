@@ -1,6 +1,6 @@
-﻿import org.aswing.EmptyLayout;
-import org.aswing.JButton;
-import org.aswing.JWindow;
+﻿import GUI.fox.aswing.EmptyLayout;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JWindow;
 /*
  Copyright aswing.org, see the LICENCE.txt.
 */

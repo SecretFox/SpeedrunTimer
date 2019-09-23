@@ -2,19 +2,19 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.ASFont;
-import org.aswing.border.TitledBorder;
-import org.aswing.Box;
-import org.aswing.Container;
-import org.aswing.DefaultComboBoxCellEditor;
-import org.aswing.JButton;
-import org.aswing.JFrame;
-import org.aswing.JScrollPane;
-import org.aswing.JTable;
-import org.aswing.table.DefaultTableModel;
-import org.aswing.table.GeneralTableCellFactory;
-import org.aswing.table.sorter.TableSorter;
-import org.aswing.UIManager;
+import GUI.fox.aswing.ASFont;
+import GUI.fox.aswing.border.TitledBorder;
+import GUI.fox.aswing.Box;
+import GUI.fox.aswing.Container;
+import GUI.fox.aswing.DefaultComboBoxCellEditor;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JTable;
+import GUI.fox.aswing.table.DefaultTableModel;
+import GUI.fox.aswing.table.GeneralTableCellFactory;
+import GUI.fox.aswing.table.sorter.TableSorter;
+import GUI.fox.aswing.UIManager;
 
 import test.table.SexIconCell;
 

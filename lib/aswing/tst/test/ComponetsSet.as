@@ -2,31 +2,31 @@
  CopyRight @ 2005 XLands.com INC. All rights reserved.
 */
 
-import org.aswing.ASWingUtils;
-import org.aswing.border.SimpleTitledBorder;
-import org.aswing.BorderLayout;
-import org.aswing.Container;
-import org.aswing.JAccordion;
-import org.aswing.JButton;
-import org.aswing.JCheckBox;
-import org.aswing.JComboBox;
-import org.aswing.JFrame;
-import org.aswing.JLabel;
-import org.aswing.JPanel;
-import org.aswing.JProgressBar;
-import org.aswing.JRadioButton;
-import org.aswing.JScrollPane;
-import org.aswing.JSeparator;
-import org.aswing.JSlider;
-import org.aswing.JTabbedPane;
-import org.aswing.JTable;
-import org.aswing.JTextArea;
-import org.aswing.JTextField;
-import org.aswing.JToggleButton;
-import org.aswing.JTree;
-import org.aswing.JWindow;
-import org.aswing.SoftBox;
-import org.aswing.table.DefaultTableModel;
+import GUI.fox.aswing.ASWingUtils;
+import GUI.fox.aswing.border.SimpleTitledBorder;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.Container;
+import GUI.fox.aswing.JAccordion;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JCheckBox;
+import GUI.fox.aswing.JComboBox;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JLabel;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JProgressBar;
+import GUI.fox.aswing.JRadioButton;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JSeparator;
+import GUI.fox.aswing.JSlider;
+import GUI.fox.aswing.JTabbedPane;
+import GUI.fox.aswing.JTable;
+import GUI.fox.aswing.JTextArea;
+import GUI.fox.aswing.JTextField;
+import GUI.fox.aswing.JToggleButton;
+import GUI.fox.aswing.JTree;
+import GUI.fox.aswing.JWindow;
+import GUI.fox.aswing.SoftBox;
+import GUI.fox.aswing.table.DefaultTableModel;
 
 /**
  * @author iiley

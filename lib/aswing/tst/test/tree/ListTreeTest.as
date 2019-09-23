@@ -2,12 +2,12 @@
  CopyRight @ 2005 XLands.com INC. All rights reserved.
 */
 
-import org.aswing.BorderLayout;
-import org.aswing.JButton;
-import org.aswing.JFrame;
-import org.aswing.JListTree;
-import org.aswing.JPanel;
-import org.aswing.JScrollPane;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JListTree;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JScrollPane;
 
 /**
  * @author iiley

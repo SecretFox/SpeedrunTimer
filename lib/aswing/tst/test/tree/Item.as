@@ -1,4 +1,4 @@
-﻿import org.aswing.tree.Identifiable;
+﻿import GUI.fox.aswing.tree.Identifiable;
 /*
  Copyright aswing.org, see the LICENCE.txt.
 */

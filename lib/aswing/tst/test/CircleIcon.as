@@ -1,8 +1,8 @@
-﻿import org.aswing.ASColor;
-import org.aswing.Component;
-import org.aswing.graphics.Graphics;
-import org.aswing.graphics.SolidBrush;
-import org.aswing.Icon;
+﻿import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.Component;
+import GUI.fox.aswing.graphics.Graphics;
+import GUI.fox.aswing.graphics.SolidBrush;
+import GUI.fox.aswing.Icon;
 
 /**
  * @author iiley

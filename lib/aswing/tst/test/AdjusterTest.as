@@ -2,10 +2,10 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.Container;
-import org.aswing.JAdjuster;
-import org.aswing.JFrame;
-import org.aswing.SoftBox;
+import GUI.fox.aswing.Container;
+import GUI.fox.aswing.JAdjuster;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.SoftBox;
 
 /**
  * @author iiley

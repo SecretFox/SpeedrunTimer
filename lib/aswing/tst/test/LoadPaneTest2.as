@@ -1,15 +1,15 @@
-﻿import org.aswing.ASColor;
-import org.aswing.border.LineBorder;
-import org.aswing.BorderLayout;
-import org.aswing.Component;
-import org.aswing.FloorPane;
-import org.aswing.geom.Dimension;
-import org.aswing.JButton;
-import org.aswing.JComboBox;
-import org.aswing.JFrame;
-import org.aswing.JLoadPane;
-import org.aswing.JScrollPane;
-import org.aswing.JViewport;
+﻿import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.border.LineBorder;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.Component;
+import GUI.fox.aswing.FloorPane;
+import GUI.fox.aswing.geom.Dimension;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JComboBox;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JLoadPane;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JViewport;
 
 import test.CenterJViewport;
 import test.CenterViewportLayout;

@@ -1,7 +1,7 @@
-﻿import org.aswing.JButton;
-import org.aswing.JPanel;
-import org.aswing.JPopup;
-import org.aswing.SoftBoxLayout;
+﻿import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JPopup;
+import GUI.fox.aswing.SoftBoxLayout;
 /*
  Copyright aswing.org, see the LICENCE.txt.
 */

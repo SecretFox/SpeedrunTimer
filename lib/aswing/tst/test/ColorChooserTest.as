@@ -2,16 +2,16 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.ASColor;
-import org.aswing.ASWingUtils;
-import org.aswing.BorderLayout;
-import org.aswing.geom.Point;
-import org.aswing.JButton;
-import org.aswing.JColorChooser;
-import org.aswing.JFrame;
-import org.aswing.JScrollPane;
-import org.aswing.JTextArea;
-import org.aswing.util.Delegate;
+import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.ASWingUtils;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.geom.Point;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JColorChooser;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JTextArea;
+import GUI.fox.aswing.util.Delegate;
 
 /**
  * @author iiley

@@ -1,14 +1,14 @@
 /*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.AbstractButton;
-import org.aswing.ASColor;
-import org.aswing.BorderLayout;
-import org.aswing.Component;
-import org.aswing.Icon;
-import org.aswing.JButton;
-import org.aswing.JToggleButton;
-import org.aswing.MCPanel;
+import GUI.fox.aswing.AbstractButton;
+import GUI.fox.aswing.ASColor;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.Component;
+import GUI.fox.aswing.Icon;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JToggleButton;
+import GUI.fox.aswing.MCPanel;
 
 import test.ColorIcon;
 

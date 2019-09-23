@@ -1,12 +1,12 @@
 ﻿/*
  Copyright aswing.org, see the LICENCE.txt.
 */
-import org.aswing.ASFont;
-import org.aswing.FlowLayout;
-import org.aswing.JButton;
-import org.aswing.JFrame;
-import org.aswing.JLabel;
-import org.aswing.JToolTip;
+import GUI.fox.aswing.ASFont;
+import GUI.fox.aswing.FlowLayout;
+import GUI.fox.aswing.JButton;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JLabel;
+import GUI.fox.aswing.JToolTip;
 
 /**
  *

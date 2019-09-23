@@ -2,15 +2,15 @@
  Copyright aswing.org, see the LICENCE.txt.
 */
 
-import org.aswing.BorderLayout;
-import org.aswing.colorchooser.AbstractColorChooserPanel;
-import org.aswing.colorchooser.JColorMixer;
-import org.aswing.colorchooser.JColorSwatches;
-import org.aswing.Container;
-import org.aswing.JFrame;
-import org.aswing.JPanel;
-import org.aswing.JScrollPane;
-import org.aswing.JTextArea;
+import GUI.fox.aswing.BorderLayout;
+import GUI.fox.aswing.colorchooser.AbstractColorChooserPanel;
+import GUI.fox.aswing.colorchooser.JColorMixer;
+import GUI.fox.aswing.colorchooser.JColorSwatches;
+import GUI.fox.aswing.Container;
+import GUI.fox.aswing.JFrame;
+import GUI.fox.aswing.JPanel;
+import GUI.fox.aswing.JScrollPane;
+import GUI.fox.aswing.JTextArea;
 
 /**
  * @author iiley
