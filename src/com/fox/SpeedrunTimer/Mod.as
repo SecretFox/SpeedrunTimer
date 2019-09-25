@@ -367,7 +367,10 @@ class com.fox.SpeedrunTimer.Mod {
 		
 	}
 	private function UploaderFeedback(feed:String) {
-		if (m_settings) m_settings.__SetText(feed);
+		if (feed.indexOf("Feed||") == 0){
+			Feedback(feed.split("Feed||")[1], true);
+		}
+		else if (m_settings) m_settings.__SetText(feed);
 		else Feedback(feed, true);
 	}
 	private function TimedOut() {
@@ -586,7 +589,7 @@ class com.fox.SpeedrunTimer.Mod {
 	}
 //Feedback
 
-	private function Feedback(str,override) {
+	private function Feedback(str, override) {
 		if (override || DValDebug.GetValue()) com.GameInterface.UtilsBase.PrintChatText(string(str));
 	}
 	private function PrintCurrentSettings(dv:DistributedValue) {

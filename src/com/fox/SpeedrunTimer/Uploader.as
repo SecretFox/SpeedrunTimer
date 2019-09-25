@@ -14,7 +14,7 @@ class com.fox.SpeedrunTimer.Uploader {
 	private static var ApiAddress:String = "api";
 	static var sep:String = "&v=";
 	static var key:String = "?k=Speedrun";
-	static var ModVersion:String = "1.4.3";
+	static var ModVersion:String = "1.5.0";
 	
 	private var ID;
 	public var UploadQueue:Array;
