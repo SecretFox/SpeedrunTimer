@@ -44,6 +44,7 @@ class com.fox.SpeedrunTimer.Mod {
 	public var DValAutoUpload:DistributedValue;
 	public var DValAllZones:DistributedValue;
 	public var DValSettingsVisible:DistributedValue;
+	public var DValIgnoreSides:DistributedValue;
 	
 	private var m_uploader:Uploader;
 	private var TaskWasFailed:Number = 0;
@@ -89,6 +90,7 @@ class com.fox.SpeedrunTimer.Mod {
 		RunArchieve = DistributedValue.Create("RunArchieve_Speedrun");
 		DValSettingsVisible = DistributedValue.Create("Speedrun_Settings");
 		
+		DValIgnoreSides = DistributedValue.Create("Speedrun_IgnoreSides");		
 	}
 
 	public function Load() {
@@ -156,6 +158,8 @@ class com.fox.SpeedrunTimer.Mod {
 		DValAutoSet.SetValue(config.FindEntry("AutoSet", false));
 		DValAutoUpload.SetValue(config.FindEntry("AutoUpload",false));
 		DValAllZones.SetValue(config.FindEntry("AllZones", true));
+		DValIgnoreSides.SetValue(config.FindEntry("IgnoreSides", true));
+		
 		var icon_pos = config.FindEntry("IconPos", new Point(200, 50))
 		m_Icon.Activate(icon_pos);
 		TimerPos = config.FindEntry("m_TimerPos");
@@ -230,6 +234,7 @@ class com.fox.SpeedrunTimer.Mod {
 		config.AddEntry("m_TimerPos", TimerPos);
 		config.AddEntry("settingsPos", settingsPos);
 		config.AddEntry("RunArchieves", RunArchieve.GetValue());
+		config.AddEntry("IgnoreSides", DValIgnoreSides.GetValue());
 
 		config.AddEntry("AutoSet", DValAutoSet.GetValue());
 		config.AddEntry("AutoUpload", DValAutoUpload.GetValue());
@@ -433,7 +438,7 @@ class com.fox.SpeedrunTimer.Mod {
 // Helper func
 	private function IgnoredQuest(QuestID:Number) {
 		var m_quest:Quest = QuestsBase.GetQuest(QuestID, false, true);
-		if(	m_quest.m_MissionType == _global.Enums.MainQuestType.e_Item || 
+		if(	(m_quest.m_MissionType == _global.Enums.MainQuestType.e_Item && DValIgnoreSides.GetValue()) || 
 			m_quest.m_MissionType == _global.Enums.MainQuestType.e_MetaChallenge || 
 			m_quest.m_MissionType == _global.Enums.MainQuestType.e_AreaMission ||
 			m_quest.m_MissionType == _global.Enums.MainQuestType.e_Group ||

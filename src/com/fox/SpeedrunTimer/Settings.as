@@ -34,6 +34,7 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 	private var AutoUploadCheckbox:JCheckBox;
 	private var ZoneCheckbox:JCheckBox;
 	private var DebugCheckBox:JCheckBox;
+	private var IgnoreSides:JCheckBox;
 	
 	private var tf1:JTextField;
 	private var FadeInterval:Number;
@@ -64,19 +65,24 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 		
 	//checkboxes
 		var CheckboxPane:JPanel = new JPanel();
+		
 		CheckboxPane.append(GetDebugCheckBox());
 		CheckboxPane.append(GetAutoSetCheckBox());
 		CheckboxPane.append(GetAutoUploadCheckBox());
 		CheckboxPane.append(GetZoneCheckBox());
+		CheckboxPane.append(GetIgnoreSides());
+		
 		ZoneCheckbox.setSelected(m_Mod.DValAllZones.GetValue());
 		DebugCheckBox.setSelected(m_Mod.DValDebug.GetValue());
 		AutoSetCheckBox.setSelected(m_Mod.DValAutoSet.GetValue());
 		AutoUploadCheckbox.setSelected(m_Mod.DValAutoUpload.GetValue());
+		IgnoreSides.setSelected(m_Mod.DValIgnoreSides.GetValue());
 		
 		ZoneCheckbox.addActionListener(__ZoneChanged, this);
 		DebugCheckBox.addActionListener(__DebugChanged, this);
 		AutoSetCheckBox.addActionListener(__AutoSetChanged, this);
 		AutoUploadCheckbox.addActionListener(__AutoUploadChanged, this);
+		IgnoreSides.addActionListener(__IgnoreChanged, this);
 		
 		content.append(CheckboxPane);
 	//text fields
@@ -204,6 +210,9 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 	private function __AutoUploadChanged(checkbox:JCheckBox){
 		m_Mod.DValAutoUpload.SetValue(checkbox.isSelected());
 	}
+	private function __IgnoreChanged(checkbox:JCheckBox){
+		m_Mod.DValIgnoreSides.SetValue(checkbox.isSelected());
+	}
 //Button actions
 	private function __Activate(button:JButton){
 		var selected = Listbox.getSelectedValue();
@@ -308,6 +317,14 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 			DebugCheckBox.setSelected(false);
 		}
 		return DebugCheckBox;
+	}
+	private function GetIgnoreSides(){
+		if (IgnoreSides == null){
+			IgnoreSides = new JCheckBox("Ignore sides");
+			//DebugCheckBox.setToolTipText("Dont start timer for side missions");
+			IgnoreSides.setSelected(true);
+		}
+		return IgnoreSides;
 	}
 	private function GetActivateButton(){
 		if (ActivateButton == null){
