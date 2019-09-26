@@ -438,7 +438,8 @@ class com.fox.SpeedrunTimer.Mod {
 // Helper func
 	private function IgnoredQuest(QuestID:Number) {
 		var m_quest:Quest = QuestsBase.GetQuest(QuestID, false, true);
-		if(	(m_quest.m_MissionType == _global.Enums.MainQuestType.e_Item && DValIgnoreSides.GetValue()) || 
+		if ((m_quest.m_MissionType == _global.Enums.MainQuestType.e_Item && DValIgnoreSides.GetValue()) || 
+			m_quest.m_MissionType == _global.Enums.MainQuestType.e_Item && m_quest.m_MissionIsNightmare ||
 			m_quest.m_MissionType == _global.Enums.MainQuestType.e_MetaChallenge || 
 			m_quest.m_MissionType == _global.Enums.MainQuestType.e_AreaMission ||
 			m_quest.m_MissionType == _global.Enums.MainQuestType.e_Group ||
