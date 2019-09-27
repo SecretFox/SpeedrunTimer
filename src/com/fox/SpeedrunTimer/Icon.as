@@ -1,16 +1,21 @@
 import com.GameInterface.Chat;
 import com.GameInterface.DistributedValue;
 import com.GameInterface.DistributedValueBase;
+import com.fox.SpeedrunTimer.Uploader;
 import com.fox.Utils.Common;
 import flash.geom.Point;
 import mx.utils.Delegate;
 import com.Utils.GlobalSignal;
+import com.GameInterface.Tooltip.TooltipInterface;
+import com.GameInterface.Tooltip.TooltipData;
+import com.GameInterface.Tooltip.TooltipManager;
 
 class com.fox.SpeedrunTimer.Icon {
 	private var m_swfRoot:MovieClip;
 	private var m_Icon:MovieClip;
 	private var DValIgnoreSides:DistributedValue;
 	private var m_pos:Point;
+	private var Tooltip:TooltipInterface;
 	
 
 	public function Icon(swfRoot: MovieClip) {
@@ -41,7 +46,22 @@ class com.fox.SpeedrunTimer.Icon {
 			m_Icon.onReleaseOutside = Delegate.create(this,function ():Void {
 				this.m_Icon.stopDrag();
 			});
+			Tooltip.Close();
 		} else {
+			m_Icon.onRelease = undefined;
+			m_Icon.onReleaseOutside = undefined;
+			m_Icon.onRollOver = Delegate.create(this, function() {
+				this.Tooltip.Close();
+				var m_TooltipData:TooltipData = new TooltipData();
+				m_TooltipData.m_Title = "<font size='14'>Speedrun v."+Uploader.ModVersion"</font>";
+				m_TooltipData.m_Color = 0xE37904;
+				m_TooltipData.AddDescription("<font size='12'>Left click to open settings\nCtrl+Click to toggle side mission timing\n\nMoveable while in GUIEdit mode</font>");
+				m_TooltipData.m_MaxWidth = 300;
+				this.Tooltip = TooltipManager.GetInstance().ShowTooltip(undefined, TooltipInterface.e_OrientationVertical,0.5, m_TooltipData);
+			});
+			m_Icon.onRollOut = Delegate.create(this, function() {
+				this.Tooltip.Close();
+			});
 			m_Icon.stopDrag();
 			m_Icon.onPress = Delegate.create(this, Toggle);
 			m_Icon.onRelease = undefined;
