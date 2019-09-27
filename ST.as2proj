@@ -43,6 +43,7 @@
     <asset path="src\assets\CloseButton.png" bitmap="False" />
     <asset path="src\assets\modIcon.png" bitmap="False" />
     <asset path="src\assets\gfxfontlib.swf" />
+    <asset path="src\assets\icon.swf" />
   </library>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

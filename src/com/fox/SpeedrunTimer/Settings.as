@@ -213,6 +213,9 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 	private function __IgnoreChanged(checkbox:JCheckBox){
 		m_Mod.DValIgnoreSides.SetValue(checkbox.isSelected());
 	}
+	private function __IgnoreChanged2(){
+		IgnoreSides.setSelected(m_Mod.DValIgnoreSides.GetValue());
+	}
 //Button actions
 	private function __Activate(button:JButton){
 		var selected = Listbox.getSelectedValue();
@@ -323,6 +326,7 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 			IgnoreSides = new JCheckBox("Ignore sides");
 			//DebugCheckBox.setToolTipText("Dont start timer for side missions");
 			IgnoreSides.setSelected(true);
+			m_Mod.DValIgnoreSides.SignalChanged.Connect(__IgnoreChanged2, this);
 		}
 		return IgnoreSides;
 	}
