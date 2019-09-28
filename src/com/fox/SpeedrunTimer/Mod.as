@@ -9,6 +9,7 @@ import com.GameInterface.Game.Camera;
 import com.GameInterface.Game.Character;
 import com.GameInterface.Quest;
 import com.GameInterface.QuestsBase;
+import com.GameInterface.UtilsBase;
 import com.Utils.Archive;
 import com.Utils.LDBFormat;
 import com.fox.SpeedrunTimer.Icon;
@@ -45,6 +46,7 @@ class com.fox.SpeedrunTimer.Mod {
 	public var DValAllZones:DistributedValue;
 	public var DValSettingsVisible:DistributedValue;
 	public var DValIgnoreSides:DistributedValue;
+	//public var GroupFinderID:Number;
 	
 	private var m_uploader:Uploader;
 	private var TaskWasFailed:Number = 0;
@@ -109,8 +111,11 @@ class com.fox.SpeedrunTimer.Mod {
 		Camera.SignalCinematicActivated.Connect(CinematicActivated, this);
 		// used to substract time spent on loading screens
 		AccountManagement.GetInstance().SignalLoginStateChanged.Connect(LoginStateChanged, this);
-		m_settingsRoot.removeMovieClip();
 		
+		// GroupfinderID for finding out dungeon/raid difficulty
+		//GroupFinder.SignalClientStartedGroupFinderActivity.Connect(SlotJoinedGroupFinderBuffer, this);
+		
+		m_settingsRoot.removeMovieClip();	
 		m_settingsRoot = m_swfroot.createEmptyMovieClip("m_settingsRoot", m_swfroot.getNextHighestDepth());
 		ASWingUtils.setRootMovieClip(m_settingsRoot);
 		var laf:TswLookAndFeel = new TswLookAndFeel();
@@ -129,6 +134,7 @@ class com.fox.SpeedrunTimer.Mod {
 		DValDebug.SignalChanged.Disconnect(PrintCurrentSettings, this);
 		DValVisibleEntries.SignalChanged.Disconnect(SetScroll, this);
 		DValSettingsVisible.SignalChanged.Disconnect(DrawSettings, this);
+		//GroupFinder.SignalClientStartedGroupFinderActivity.Disconnect(SlotJoinedGroupFinderBuffer, this);
 
 		Camera.SignalCinematicActivated.Disconnect(CinematicActivated, this);
 		AccountManagement.GetInstance().SignalLoginStateChanged.Disconnect(LoginStateChanged, this);
@@ -159,7 +165,7 @@ class com.fox.SpeedrunTimer.Mod {
 		DValAutoUpload.SetValue(config.FindEntry("AutoUpload",false));
 		DValAllZones.SetValue(config.FindEntry("AllZones", true));
 		DValIgnoreSides.SetValue(config.FindEntry("IgnoreSides", true));
-		
+		//GroupFinderID = config.FindEntry("GroupfinderID", false);
 		var icon_pos = config.FindEntry("IconPos", new Point(200, 50))
 		m_Icon.Activate(icon_pos);
 		TimerPos = config.FindEntry("m_TimerPos");
@@ -235,6 +241,7 @@ class com.fox.SpeedrunTimer.Mod {
 		config.AddEntry("settingsPos", settingsPos);
 		config.AddEntry("RunArchieves", RunArchieve.GetValue());
 		config.AddEntry("IgnoreSides", DValIgnoreSides.GetValue());
+		//config.AddEntry("GroupfinderID", GroupFinderID);
 
 		config.AddEntry("AutoSet", DValAutoSet.GetValue());
 		config.AddEntry("AutoUpload", DValAutoUpload.GetValue());
@@ -264,6 +271,8 @@ class com.fox.SpeedrunTimer.Mod {
 		config.AddEntry("settingsPos", settingsPos);
 		config.AddEntry("AutoSet", DValAutoSet.GetValue());
 		config.AddEntry("AutoUpload", DValAutoUpload.GetValue());
+		config.AddEntry("IgnoreSides", DValIgnoreSides.GetValue());
+		//config.AddEntry("GroupfinderID", GroupFinderID);
 		mod.StoreConfig(config);
 	}
 
@@ -436,6 +445,17 @@ class com.fox.SpeedrunTimer.Mod {
 		return runObject
 	}
 // Helper func
+/*
+	//takes a moment to update, hopefully triggers before player gets sent in to the instnace
+	private function SlotJoinedGroupFinderBuffer() {
+		setTimeout(Delegate.create(this, SlotJoinedGroupFinder), 500);
+	}
+
+	private function SlotJoinedGroupFinder() {
+		GroupfinderID = GroupFinder.GetActiveQueue();
+		ManualSave();
+	}
+	*/
 	private function IgnoredQuest(QuestID:Number) {
 		var m_quest:Quest = QuestsBase.GetQuest(QuestID, false, true);
 		if ((m_quest.m_MissionType == _global.Enums.MainQuestType.e_Item && DValIgnoreSides.GetValue()) || 
