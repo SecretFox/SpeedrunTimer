@@ -441,6 +441,7 @@ class com.fox.SpeedrunTimer.Mod {
 		if ((m_quest.m_MissionType == _global.Enums.MainQuestType.e_Item && DValIgnoreSides.GetValue()) || 
 			m_quest.m_MissionType == _global.Enums.MainQuestType.e_Item && m_quest.m_MissionIsNightmare ||
 			m_quest.m_MissionType == _global.Enums.MainQuestType.e_MetaChallenge || 
+			m_quest.m_MissionType == _global.Enums.MainQuestType.e_Scenario ||
 			m_quest.m_MissionType == _global.Enums.MainQuestType.e_AreaMission ||
 			m_quest.m_MissionType == _global.Enums.MainQuestType.e_Group ||
 			m_quest.m_MissionType == _global.Enums.MainQuestType.e_Raid ||
