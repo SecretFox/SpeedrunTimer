@@ -7,8 +7,6 @@ import com.GameInterface.DistributedValueBase;
 import com.GameInterface.GUIModuleIF;
 import com.GameInterface.Game.Camera;
 import com.GameInterface.Game.Character;
-import com.GameInterface.Input;
-import com.GameInterface.LogBase;
 import com.GameInterface.Quest;
 import com.GameInterface.QuestsBase;
 import com.Utils.Archive;
@@ -34,8 +32,7 @@ class com.fox.SpeedrunTimer.Mod
 	static var DValSettingsVisible:DistributedValue;
 	static var DValIgnoreSides:DistributedValue;
 	static var RunArchive:DistributedValue;
-	static var DValSave:DistributedValue;
-	static var DValLog:DistributedValue;
+	static var DValHeartBeat:DistributedValue;
 
 	private var m_Timer:Timer;
 	private var m_settingsRoot:MovieClip;
@@ -48,12 +45,12 @@ class com.fox.SpeedrunTimer.Mod
 	private var m_otherQuests:Array;
 	private var m_endValue:String;
 	private var m_currentRun:Array;
+	private var heartbeatInterval:Number;
 
 	private var m_uploader:Uploader;
 	private var m_taskFailed:Number = 0;
 	private var m_previousTaskID:Number;
-	private var logInterval:Number;
-	private var heartbeatInterval:Number;
+	
 
 	// Time when player entered cutscene
 	private var m_cutsceneStart:Number;
@@ -67,9 +64,9 @@ class com.fox.SpeedrunTimer.Mod
 	// This array converts between them so that any of the ID's will work for starting the speedrun
 	// Quests will also be stored with illuminati ID
 	static var IDCONVERT:Array = [
-									 ["32751845911,3275","32731845711,3273","32741845811,3274"],
-									 ["32681847011,3268","32641897011,3264","30951896911,3095"]
-								 ];
+		["32751845911,3275","32731845711,3273","32741845811,3274"],
+		["32681847011,3268","32641897011,3264","30951896911,3095"]
+	];
 
 	public static function main(swfRoot:MovieClip)
 	{
@@ -93,8 +90,7 @@ class com.fox.SpeedrunTimer.Mod
 		RunArchive = DistributedValue.Create("Archive_Speedrun");
 		DValSettingsVisible = DistributedValue.Create("Speedrun_Settings");
 		DValIgnoreSides = DistributedValue.Create("Speedrun_IgnoreSides");
-		DValSave = DistributedValue.Create("Speedrun_Save");
-		DValLog = DistributedValue.Create("Speedrun_LogProgress");
+		DValHeartBeat = DistributedValue.Create("Speedrun_HeartBeat");
 	}
 
 	public function Load()
@@ -108,8 +104,6 @@ class com.fox.SpeedrunTimer.Mod
 		DValSet.SignalChanged.Connect(SlotSetChanged, this);
 		DValVisibleEntries.SignalChanged.Connect(SetScroll, this);
 		DValSettingsVisible.SignalChanged.Connect(DrawSettings, this);
-		DValSave.SignalChanged.Connect(SaveProgress, this);
-		DValLog.SignalChanged.Connect(SlotLog, this);
 
 		var val = RunArchive.GetValue();
 		if (!val) RunArchive.SetValue(new Archive());
@@ -127,7 +121,6 @@ class com.fox.SpeedrunTimer.Mod
 		UIManager.setLookAndFeel(laf);
 		m_Icon = new Icon(m_swfroot);
 		m_Icon.SignalMoved.Connect(SignalIconMoved, this);
-		Input.RegisterHotkey(_global.Enums.InputCommand.e_InputCommand_Debug_PosToClipboard, "com.fox.SpeedrunTimer.Mod.Instance.PostLog", _global.Enums.Hotkey.eHotkeyDown);
 	}
 
 	public function Unload()
@@ -142,8 +135,6 @@ class com.fox.SpeedrunTimer.Mod
 		DValDebug.SignalChanged.Disconnect(PrintCurrentSettings, this);
 		DValVisibleEntries.SignalChanged.Disconnect(SetScroll, this);
 		DValSettingsVisible.SignalChanged.Disconnect(DrawSettings, this);
-		DValSave.SignalChanged.Disconnect(SaveProgress, this);
-		DValLog.SignalChanged.Disconnect(SlotLog, this);
 		//GroupFinder.SignalClientStartedGroupFinderActivity.Disconnect(SlotJoinedGroupFinderBuffer, this);
 
 		Camera.SignalCinematicActivated.Disconnect(CinematicActivated, this);
@@ -155,21 +146,6 @@ class com.fox.SpeedrunTimer.Mod
 		m_Icon.SignalMoved.Disconnect(SignalIconMoved, this);
 		m_Icon.Unload();
 		m_Icon = undefined;
-		Input.RegisterHotkey(_global.Enums.InputCommand.e_InputCommand_Debug_PosToClipboard, "", _global.Enums.Hotkey.eHotkeyDown);
-	}
-
-	public function PostLog()
-	{
-		DValSave.SetValue(true);
-	}
-
-	public function SlotLog(dv:DistributedValue)
-	{
-		clearInterval(logInterval);
-		if ( dv.GetValue() && m_Timer)
-		{
-			logInterval = setInterval(Delegate.create(this, LogProgress),2000);
-		}
 	}
 
 	public function SignalIconMoved(pos:Point)
@@ -568,7 +544,7 @@ class com.fox.SpeedrunTimer.Mod
 		m_currentRun = new Array();
 		m_taskFailed = 0;
 		m_startTime = undefined;
-		clearInterval(logInterval);
+		clearInterval(heartbeatInterval);
 		m_config.DeleteEntry("m_startTime");
 		if (m_Timer)
 		{
@@ -589,11 +565,8 @@ class com.fox.SpeedrunTimer.Mod
 			m_Timer.SignalClear.Disconnect(RemoveTimer, this);
 			m_Timer = undefined;
 		}
-		if ( DValLog.GetValue)
-		{
-			clearInterval(logInterval);
-			logInterval = setInterval(Delegate.create(this, LogProgress),2000);
-		}
+		clearInterval(heartbeatInterval);
+		heartbeatInterval = setInterval(Delegate.create(this, HeartBeat), DistributedValueBase.GetDValue("Speedrun_HeartBeatInterval"));
 		m_taskFailed = 0;
 		m_Timer = new Timer(m_swfroot, m_config.FindEntry("timerPos"));
 		m_Timer.SetTitle(m_startValue);
@@ -602,21 +575,8 @@ class com.fox.SpeedrunTimer.Mod
 		m_Timer.SetStartTime(m_startTime);
 		m_Timer.SetArchieve(arch.FindEntry(m_startValue +"|" + m_otherQuests.join(",") + "|" + m_endValue).split("||"));
 		m_Timer.SetTitle(m_startValue);
+		HeartBeat();
 		ManualSave();
-	}
-
-	public function pad(n:Number):String
-	{
-		return (n < 10 ? "0" : "") + n;
-	}
-
-	public function GetLocalTime(timestamp)
-	{
-		var now:Date = new Date(timestamp);
-		var hours:Number = now.getHours();
-		var minutes:Number = now.getMinutes();
-		var seconds:Number = now.getSeconds();
-		return pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
 	}
 
 	public function RebaseTimer(diff)
@@ -626,88 +586,30 @@ class com.fox.SpeedrunTimer.Mod
 		if ( m_Timer ) m_Timer.SetStartTime(m_startTime);
 		m_config.ReplaceEntry("m_startTime", string(m_startTime));
 	}
-
-	private function GenerateRunKey(value:Number, username:String):String
+	
+	public function HeartBeat()
 	{
-		return value + "_" + SimpleHash(value + username);
-	}
-
-	private function SimpleHash(str:String):String
-	{
-		var hash:Number = 0;
-		for (var i:Number = 0; i < str.length; i++)
+		var oldHeartbeat = DValHeartBeat.GetValue();
+		var newHeartbeat = (new Date()).valueOf();
+		DValHeartBeat.SetValue(string(newHeartbeat));
+		
+		
+		if (!oldHeartbeat) 
 		{
-			hash = ((hash << 5) - hash) + str.charCodeAt(i);
-			hash &= 0xFFFFFFFF;
+			Feedback("First heartbeat");
+			return;
 		}
-		return hash.toString(16);
-	}
-
-	private function ValidateRunKey(input:String, username:String):Number
-	{
-		var parts:Array = input.split("_");
-		if (parts.length != 2) return null;
-
-		var value:Number = Number(parts[0]);
-		var hash:String = parts[1];
-
-		if (SimpleHash(value + username) == hash)
+		
+		var diff = newHeartbeat - Number(oldHeartbeat);
+		Feedback("Heartbeat " + diff);
+		
+		if ( diff > DistributedValueBase.GetDValue("Speedrun_HeartBeatDeviance"))
 		{
-			return value;
+			Feedback("heartbeat skipped, diff " + diff + "ms, allowed " + DistributedValueBase.GetDValue("Speedrun_HeartBeatDeviance"));
+			RebaseTimer(diff - DistributedValueBase.GetDValue("Speedrun_HeartBeatInterval"));
 		}
-		return null;
 	}
 
-	private function StringifyRun()
-	{
-		var val = "";
-		for ( var i in m_Timer.m_entries)
-		{
-			val += String(m_Timer.m_entries[i].Goal.text).substr(0,2);
-		}
-		return val
-	}
-
-	public function LogProgress( val )
-	{
-		var duration = (new Date()).valueOf() - m_startTime;
-		var key = GenerateRunKey(duration, Character.GetClientCharacter().GetName() + StringifyRun());
-		LogBase.Error("Speedrun", val ? key + val : key);
-	}
-
-	public function SaveProgress(dv:DistributedValue)
-	{
-		var value = dv.GetValue();
-		if (!value) return;
-
-		if ( m_Timer )
-		{
-			if ( value == true || value == 1)
-			{
-				var duration = (new Date()).valueOf() - m_startTime;
-				var key = GenerateRunKey(duration, Character.GetClientCharacter().GetName() + StringifyRun());
-				Feedback("<Font color=\"gold\">Use <Font color=\"red\">/option Speedrun_Save \"" + key + "\"</font>    to restore timer</font>", true);
-				ManualSave();
-			}
-			else
-			{
-				var validated = ValidateRunKey(value, Character.GetClientCharacter().GetName() + StringifyRun());
-				if (validated)
-				{
-					var current = (new Date()).valueOf();
-					m_startTime = current - validated;
-					m_Timer.SetStartTime(m_startTime);
-					m_config.ReplaceEntry("m_startTime", string(m_startTime));
-					ManualSave();
-				}
-				else
-				{
-					Feedback("<Font color=\"red\">Failed to restore timer:\n -Character must be the same\n -The time must be unchanged\n -Quest progress must be the same</font>", true);
-				}
-			}
-		}
-		dv.SetValue(false);
-	}
 
 	// 13 = local teleport
 	// 12 = inPlay
@@ -775,10 +677,11 @@ class com.fox.SpeedrunTimer.Mod
 		m_Timer.StopTimer();
 		CheckBestRun();
 		ManualSave();
-		clearInterval(logInterval);
+		clearInterval(heartbeatInterval);
 		m_currentRun = new Array();
 		m_startTime = undefined;
 		m_config.DeleteEntry("m_startTime");
+		DValHeartBeat.SetValue(false);
 		if ( m_settings ) m_settings.refreshRuns();
 	}
 
@@ -796,7 +699,6 @@ class com.fox.SpeedrunTimer.Mod
 		}
 		m_currentRun.push(key + "_" + Elapsed);
 		m_Timer.SetTierTime(key, Elapsed);
-		LogProgress( " ( " + m_Timer.m_entries[m_Timer.m_entries.length-1].Goal.text + " ) ");
 		ManualSave();
 	}
 	//Feedback
