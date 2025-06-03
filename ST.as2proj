@@ -11,11 +11,13 @@
     <movie version="8" />
     <movie minorVersion="0" />
     <movie platform="Flash Player" />
-    <movie background="#FFFFFF" />
+    <movie background="#ADAAA7" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
+    <class path="lib\foxwing" />
+    <class path="lib\aswing\src" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -42,8 +44,9 @@
   <library>
     <asset path="src\assets\CloseButton.png" bitmap="False" />
     <asset path="src\assets\modIcon.png" bitmap="False" />
-    <asset path="src\assets\gfxfontlib.swf" />
+    <asset path="src\assets\gfxfontlib.swf" update="..\..\assets\gfxfontlib.swf" />
     <asset path="src\assets\icon.swf" />
+    <asset path="src\assets\gfxfontlib.swf" />
   </library>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
@@ -52,8 +55,8 @@
   <!-- Executed before build -->
   <preBuildCommand />
   <!-- Executed after build -->
-  <postBuildCommand alwaysRun="False">xcopy "$(ProjectDir)\bin\*.*" "G:\SWL\Secret World Legends\Data\Gui\Custom\Flash\Speedrun\*.*" /e /y
-xcopy "$(ProjectDir)\src\mod\*.*" "G:\SWL\Secret World Legends\Data\Gui\Custom\Flash\Speedrun\*.*" /e /y
+  <postBuildCommand alwaysRun="False">xcopy "$(ProjectDir)\bin\*.*" "J:\Secret World Legends\Data\Gui\Custom\Flash\Speedrun\*.*" /e /y
+xcopy "$(ProjectDir)\src\mod\*.*" "J:\Secret World Legends\Data\Gui\Custom\Flash\Speedrun\*.*" /e /y
 
 xcopy "$(ProjectDir)\bin\*.*" "./deployment/Speedrun/*.*" /e /y
 xcopy "$(ProjectDir)\src\mod\*.*" "./deployment/Speedrun/*.*" /e /y</postBuildCommand>

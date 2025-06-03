@@ -72,11 +72,11 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 		CheckboxPane.append(GetZoneCheckBox());
 		CheckboxPane.append(GetIgnoreSides());
 		
-		ZoneCheckbox.setSelected(m_Mod.DValAllZones.GetValue());
-		DebugCheckBox.setSelected(m_Mod.DValDebug.GetValue());
-		AutoSetCheckBox.setSelected(m_Mod.DValAutoSet.GetValue());
-		AutoUploadCheckbox.setSelected(m_Mod.DValAutoUpload.GetValue());
-		IgnoreSides.setSelected(m_Mod.DValIgnoreSides.GetValue());
+		ZoneCheckbox.setSelected(Mod.DValAllZones.GetValue());
+		DebugCheckBox.setSelected(Mod.DValDebug.GetValue());
+		AutoSetCheckBox.setSelected(Mod.DValAutoSet.GetValue());
+		AutoUploadCheckbox.setSelected(Mod.DValAutoUpload.GetValue());
+		IgnoreSides.setSelected(Mod.DValIgnoreSides.GetValue());
 		
 		ZoneCheckbox.addActionListener(__ZoneChanged, this);
 		DebugCheckBox.addActionListener(__DebugChanged, this);
@@ -90,7 +90,7 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 		var textPane:JPanel = new JPanel();
 		tf1 = new JTextField("", 30);
 		var tf2:JTextField = new JTextField("", 3);
-		tf2.setText(m_Mod.DValVisibleEntries.GetValue());
+		tf2.setText(Mod.DValVisibleEntries.GetValue());
 		tf2.setRestrict("0123456789");
 		tf2.addEventListener(JTextField.ON_TEXT_CHANGED, __SplitChanged, this);
 		tf2.setFocusable(false);
@@ -161,6 +161,16 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 		return new Point(getX(), getY());
 	}
 	
+	public function refreshRuns()
+	{
+		var Data = m_Mod.GetRunsAsList(ZoneCheckbox.isSelected())
+		var arr:Array = new Array();
+		for (var i in Data){
+			arr.push(i);
+		}
+		Listbox.setListData(arr);
+	}
+	
 //Helper func
 	public function __SetText(text){
 		tf1.setText(text);
@@ -197,30 +207,30 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 	}
 //Checkbox actions
 	private function __ZoneChanged(checkbox:JCheckBox){
-		m_Mod.DValAllZones.SetValue(checkbox.isSelected());
+		Mod.DValAllZones.SetValue(checkbox.isSelected());
 		SetListData(m_Mod.GetRunsAsList(checkbox.isSelected()));
 	}
 	private function __DebugChanged(checkbox:JCheckBox){
-		m_Mod.DValDebug.SetValue(checkbox.isSelected());
+		Mod.DValDebug.SetValue(checkbox.isSelected());
 		SetListData(m_Mod.GetRunsAsList(ZoneCheckbox.isSelected()));
 	}
 	private function __AutoSetChanged(checkbox:JCheckBox){
-		m_Mod.DValAutoSet.SetValue(checkbox.isSelected());
+		Mod.DValAutoSet.SetValue(checkbox.isSelected());
 	}
 	private function __AutoUploadChanged(checkbox:JCheckBox){
-		m_Mod.DValAutoUpload.SetValue(checkbox.isSelected());
+		Mod.DValAutoUpload.SetValue(checkbox.isSelected());
 	}
 	private function __IgnoreChanged(checkbox:JCheckBox){
-		m_Mod.DValIgnoreSides.SetValue(checkbox.isSelected());
+		Mod.DValIgnoreSides.SetValue(checkbox.isSelected());
 	}
 	private function __IgnoreChanged2(){
-		IgnoreSides.setSelected(m_Mod.DValIgnoreSides.GetValue());
+		IgnoreSides.setSelected(Mod.DValIgnoreSides.GetValue());
 	}
 //Button actions
 	private function __Activate(button:JButton){
 		var selected = Listbox.getSelectedValue();
 		if (selected){
-			m_Mod.DValSet.SetValue(ListBoxContent[selected].split("|").join(","));
+			Mod.DValSet.SetValue(ListBoxContent[selected].split("|").join(","));
 			__SetText(selected + " set as active");
 		}
 		
@@ -276,7 +286,7 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 		else if (!input){
 			input = "0";
 		}
-		m_Mod.DValVisibleEntries.SetValue(Number(input));
+		Mod.DValVisibleEntries.SetValue(Number(input));
 		
 	}
 //Element creation
@@ -326,7 +336,7 @@ class com.fox.SpeedrunTimer.Settings extends JFrame {
 			IgnoreSides = new JCheckBox("Ignore sides");
 			//DebugCheckBox.setToolTipText("Dont start timer for side missions");
 			IgnoreSides.setSelected(true);
-			m_Mod.DValIgnoreSides.SignalChanged.Connect(__IgnoreChanged2, this);
+			Mod.DValIgnoreSides.SignalChanged.Connect(__IgnoreChanged2, this);
 		}
 		return IgnoreSides;
 	}

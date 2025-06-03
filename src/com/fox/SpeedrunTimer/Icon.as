@@ -1,6 +1,7 @@
 import com.GameInterface.Chat;
 import com.GameInterface.DistributedValue;
 import com.GameInterface.DistributedValueBase;
+import com.Utils.Signal;
 import com.fox.SpeedrunTimer.Uploader;
 import com.fox.Utils.Common;
 import flash.geom.Point;
@@ -16,12 +17,14 @@ class com.fox.SpeedrunTimer.Icon {
 	private var DValIgnoreSides:DistributedValue;
 	private var m_pos:Point;
 	private var Tooltip:TooltipInterface;
+	public var SignalMoved:Signal;
 	
 
 	public function Icon(swfRoot: MovieClip) {
 		m_swfRoot = swfRoot;
 		DValIgnoreSides = DistributedValue.Create("Speedrun_IgnoreSides");
 		DValIgnoreSides.SignalChanged.Connect(Tint, this);
+		SignalMoved = new Signal();
 	}
 	
 	public function Activate(pos:Point){
@@ -69,6 +72,7 @@ class com.fox.SpeedrunTimer.Icon {
 			m_pos = Common.getOnScreen(m_Icon);
 			m_Icon._x = m_pos.x;
 			m_Icon._y = m_pos.y;
+			SignalMoved.Emit(m_pos);
 		}
 	}
 	private function Toggle(){

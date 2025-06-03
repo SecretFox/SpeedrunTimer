@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?> 
 <Root>
 	<Value name="Speedrun_Enabled" value="true" />
+	
+	<Value name="Speedrun_Debug" value="false" />
+	<Value name="Speedrun_VisibleEntries" value="5" />
+	<Value name="Speedrun_AutoSet" value="false" />
+	<Value name="Speedrun_AutoUpload" value="false" />
+	<Value name="Speedrun_AllZones" value="false" />
+	<Value name="Speedrun_IgnoreSides" value="true" />
+	<Value name="Speedrun_LogProgress" value="true" />
+<!--<Value name="Speedrun_HeartBeatInterval" value="1000" />
+	<Value name="Speedrun_HeartBeatDeviance" value="10000" />-->
+	
 	<Archive name="Speedrun_Cfg" />
+	<Archive name="Archive_Speedrun" />
 </Root>
