@@ -33,12 +33,14 @@ class com.fox.SpeedrunTimer.Timer
 	private var m_updateInterval:Number;
 
 	public var SignalClear:Signal;
+	public var SignalMoved:Signal;
 
 	public function Timer(root:MovieClip, pos:Point)
 	{
 		m_pos = pos;
 		m_swfRoot = root;
 		SignalClear = new Signal();
+		SignalMoved = new Signal();
 		Mouse.addListener(this);
 	}
 
@@ -120,6 +122,7 @@ class com.fox.SpeedrunTimer.Timer
 		CheckOverFlow();
 		m_pos.x = m_Timer._x;
 		m_pos.y = m_Timer._y;
+		SignalMoved.Emit(m_pos);
 	}
 
 	public function GetTimer() {return m_Timer};
@@ -265,9 +268,9 @@ class com.fox.SpeedrunTimer.Timer
 			if (m_entries[i]._visible) height += 20;
 		}
 		if (height) Draw.DrawRectangle(m_Timer.BG, 0, 0,  m_TimerContent._width + 10, height + 115, 0x000000, 40, [5, 5, 5, 5], 3);
-		else Draw.DrawRectangle(m_Timer.BG, 0, 0,  370, 100, 0x000000, 40, [5, 5, 5, 5], 3);
+		else Draw.DrawRectangle(m_Timer.BG, 0, 0,  420, 100, 0x000000, 40, [5, 5, 5, 5], 3);
 
-		m_Timer.Close._x = m_Timer.BG._width -20;
+		m_Timer.Close._x = m_Timer.BG._width - 20;
 		m_Timer.Close._y = m_Timer.BG._y +5;
 		CheckOverFlow();
 	}
@@ -464,10 +467,4 @@ class com.fox.SpeedrunTimer.Timer
 		m_running = false;
 		m_Timer.removeMovieClip();
 	}
-
-	public function GetTimerPos()
-	{
-		return m_pos;
-	}
-
 }

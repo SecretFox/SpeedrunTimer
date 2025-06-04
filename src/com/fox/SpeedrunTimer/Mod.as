@@ -415,6 +415,7 @@ class com.fox.SpeedrunTimer.Mod
 			m_Timer = new Timer(m_swfroot, m_config.FindEntry("timerPos"));
 			m_Timer.CreateTimer();
 			m_Timer.SignalClear.Connect(RemoveTimer, this);
+			m_Timer.SignalMoved.Connect(SlotTimerMoved, this);
 			var data:Array = entry.split("||");
 			m_Timer.SetArchieve(data);
 			m_Timer.SetTitle(val);
@@ -548,13 +549,19 @@ class com.fox.SpeedrunTimer.Mod
 		m_config.DeleteEntry("m_startTime");
 		if (m_Timer)
 		{
-			m_config.ReplaceEntry("TimerPos", m_Timer.GetTimerPos());
 			m_Timer.ClearTimer();
 			m_Timer.SignalClear.Disconnect(RemoveTimer, this);
+			m_Timer.SignalMoved.Disconnect(SlotTimerMoved, this);
 			m_Timer = undefined;
 		}
 		ManualSave();
 	}
+	
+	public function SlotTimerMoved(pos:Point)
+	{
+		m_config.ReplaceEntry("timerPos", pos);
+	}
+	
 
 	private function StartTimer()
 	{
@@ -563,6 +570,7 @@ class com.fox.SpeedrunTimer.Mod
 		{
 			m_Timer.ClearTimer();
 			m_Timer.SignalClear.Disconnect(RemoveTimer, this);
+			m_Timer.SignalMoved.Disconnect(SlotTimerMoved, this);
 			m_Timer = undefined;
 		}
 		clearInterval(heartbeatInterval);
@@ -572,6 +580,7 @@ class com.fox.SpeedrunTimer.Mod
 		m_Timer.SetTitle(m_startValue);
 		m_Timer.CreateTimer();
 		m_Timer.SignalClear.Connect(RemoveTimer, this);
+		m_Timer.SignalMoved.Connect(SlotTimerMoved, this);
 		m_Timer.SetStartTime(m_startTime);
 		m_Timer.SetArchieve(arch.FindEntry(m_startValue +"|" + m_otherQuests.join(",") + "|" + m_endValue).split("||"));
 		m_Timer.SetTitle(m_startValue);
@@ -812,6 +821,7 @@ class com.fox.SpeedrunTimer.Mod
 			m_currentRun = new Array();
 			m_startTime = undefined;
 			m_config.DeleteEntry("m_startTime");
+			DValHeartBeat.SetValue(false);
 			ManualSave();
 			RemoveTimer();
 		}
