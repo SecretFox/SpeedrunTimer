@@ -10,7 +10,6 @@ import com.GameInterface.Game.Character;
 import com.GameInterface.LogBase;
 import com.GameInterface.Quest;
 import com.GameInterface.QuestsBase;
-import com.GameInterface.UtilsBase;
 import com.Utils.Archive;
 import com.Utils.LDBFormat;
 import com.fox.SpeedrunTimer.Icon;
