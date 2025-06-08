@@ -7,8 +7,10 @@ import com.GameInterface.DistributedValueBase;
 import com.GameInterface.GUIModuleIF;
 import com.GameInterface.Game.Camera;
 import com.GameInterface.Game.Character;
+import com.GameInterface.LogBase;
 import com.GameInterface.Quest;
 import com.GameInterface.QuestsBase;
+import com.GameInterface.UtilsBase;
 import com.Utils.Archive;
 import com.Utils.LDBFormat;
 import com.fox.SpeedrunTimer.Icon;
@@ -46,6 +48,7 @@ class com.fox.SpeedrunTimer.Mod
 	private var m_endValue:String;
 	private var m_currentRun:Array;
 	private var heartbeatInterval:Number;
+	private var StartTimerTimeout:Number;
 
 	private var m_uploader:Uploader;
 	private var m_taskFailed:Number = 0;
@@ -158,7 +161,6 @@ class com.fox.SpeedrunTimer.Mod
 		if ( !m_config )
 		{
 			m_config = config;
-
 			if (!m_config.FindEntry("defaultsLoaded"))
 			{
 				// GUI defaults
@@ -186,16 +188,13 @@ class com.fox.SpeedrunTimer.Mod
 					archive.AddEntry(defaultRuns[i],"Finished_99999999");
 				}
 				RunArchive.SetValue(archive);
-
 				m_config.ReplaceEntry("defaultsLoaded", true);
 			}
-
 			m_startTime = Number(m_config.FindEntry("m_startTime"));
 			m_startValue = m_config.FindEntry("Start", "38401914411");
 			m_endValue = m_config.FindEntry("End", "3840");
 			m_currentRun = m_config.FindEntryArray("m_currentRun") || new Array();
 			m_otherQuests = m_config.FindEntryArray("m_otherQuests") || new Array();
-
 			m_Icon.Activate(m_config.FindEntry("iconPos"));
 			if (m_startTime && !m_Timer)
 			{
@@ -208,6 +207,7 @@ class com.fox.SpeedrunTimer.Mod
 			}
 			DrawSettings();
 		}
+		// detect quests that completed while in loading screen
 		if (m_Timer)
 		{
 			var found = false;
@@ -227,7 +227,6 @@ class com.fox.SpeedrunTimer.Mod
 				SlotQuestCompleted(Number(m_startValue.slice(0, 4)));
 			}
 		}
-		return;
 	}
 
 	public function SaveConfig()
@@ -251,7 +250,6 @@ class com.fox.SpeedrunTimer.Mod
 		mod.StoreConfig(m_config);
 	}
 
-//Settings
 	private function DrawSettings()
 	{
 		if (DValSettingsVisible.GetValue())
@@ -326,6 +324,7 @@ class com.fox.SpeedrunTimer.Mod
 			dv.SetValue(false);
 		}
 	}
+	
 	private function SetScroll(dv:DistributedValue)
 	{
 		if (m_Timer)
@@ -334,6 +333,7 @@ class com.fox.SpeedrunTimer.Mod
 			else m_Timer.SetScroll(m_Timer.m_currentIndex);
 		}
 	}
+	
 	public function UploadAll()
 	{
 		if (!m_uploader)
@@ -357,11 +357,13 @@ class com.fox.SpeedrunTimer.Mod
 		}
 		m_uploader.StartUpload();
 	}
+	
 	private function StartedUpload(val)
 	{
 		var name = NameFromKey(val);
 		if (m_settings) m_settings.__SetText("Uploading "+name);
 	}
+	
 	public function UploadByKey(key, name)
 	{
 		var runs:Archive = RunArchive.GetValue();
@@ -496,16 +498,17 @@ class com.fox.SpeedrunTimer.Mod
 
 	private function InRun(QuestID:Number)
 	{
-		if (m_startValue.indexOf(string(QuestID)) >= 0  || m_endValue.indexOf(string(QuestID)) >= 0) return true
-					for (var i in m_otherQuests)
+		if (m_startValue.indexOf(string(QuestID)) >= 0  || m_endValue.indexOf(string(QuestID)) >= 0) return true;
+		
+		for (var i in m_otherQuests)
+		{
+			var entry = m_otherQuests[i];
+			var m_QuestID = entry.slice(0, 4);
+			if (Number(m_QuestID) == QuestID)
 			{
-				var entry = m_otherQuests[i];
-				var m_QuestID = entry.slice(0, 4);
-				if (Number(m_QuestID) == QuestID)
-				{
-					return true
-				}
+				return true
 			}
+		}
 		return false
 	}
 
@@ -565,6 +568,14 @@ class com.fox.SpeedrunTimer.Mod
 
 	private function StartTimer()
 	{
+		if ( AccountManagement.GetInstance().GetLoginState() != _global.Enums.LoginState.e_LoginStateInPlay)
+		{
+			Feedback("Waiting for player to finish loading in");
+			clearTimeout(StartTimerTimeout);
+			StartTimerTimeout = setTimeout(Delegate.create(this, StartTimer), 500);
+			return;
+		}
+		Feedback("Start timer");
 		var arch:Archive = RunArchive.GetValue();
 		if (m_Timer)
 		{
@@ -590,7 +601,7 @@ class com.fox.SpeedrunTimer.Mod
 
 	public function RebaseTimer(diff)
 	{
-		Feedback("Adjusting timer by " + Math.floor(diff / 1000) + "seconds");
+		Feedback("Adjusting timer by " + (Math.floor(diff / 100)/10) + "seconds");
 		m_startTime += diff;
 		if ( m_Timer ) m_Timer.SetStartTime(m_startTime);
 		m_config.ReplaceEntry("m_startTime", string(m_startTime));
@@ -610,7 +621,7 @@ class com.fox.SpeedrunTimer.Mod
 		}
 		
 		var diff = newHeartbeat - Number(oldHeartbeat);
-		Feedback("Heartbeat " + diff);
+		//Feedback("Heartbeat " + diff);
 		
 		if ( diff > DistributedValueBase.GetDValue("Speedrun_HeartBeatDeviance"))
 		{
@@ -618,7 +629,6 @@ class com.fox.SpeedrunTimer.Mod
 			RebaseTimer(diff - DistributedValueBase.GetDValue("Speedrun_HeartBeatInterval"));
 		}
 	}
-
 
 	// 13 = local teleport
 	// 12 = inPlay
@@ -644,7 +654,6 @@ class com.fox.SpeedrunTimer.Mod
 					m_loadScreenStart = undefined;
 					Feedback("Resuming timer")
 					RebaseTimer(diff);
-					m_Timer.SetStartTime(m_startTime);
 					m_Timer.ResumeTimer();
 					if (!m_Timer.m_currentIndex) m_Timer.SetTitle(m_startValue);
 				}
@@ -664,19 +673,15 @@ class com.fox.SpeedrunTimer.Mod
 			m_cutsceneStart = date.valueOf();
 			m_Timer.PauseTimer();
 		}
-		else
+		else if (m_cutsceneStart)
 		{
-			if (m_cutsceneStart)
-			{
-				var date:Date = new Date();
-				var diff = date.valueOf() - m_cutsceneStart;
-				m_cutsceneStart = undefined;
-				Feedback("Resuming timer due")
-				RebaseTimer(diff);
-				m_Timer.SetStartTime(m_startTime);
-				m_Timer.ResumeTimer();
-				if (!m_Timer.m_currentIndex) m_Timer.SetTitle(m_startValue);
-			}
+			var date:Date = new Date();
+			var diff = date.valueOf() - m_cutsceneStart;
+			m_cutsceneStart = undefined;
+			Feedback("Resuming timer due")
+			RebaseTimer(diff);
+			m_Timer.ResumeTimer();
+			if (!m_Timer.m_currentIndex) m_Timer.SetTitle(m_startValue);
 		}
 	}
 
@@ -710,22 +715,24 @@ class com.fox.SpeedrunTimer.Mod
 		m_Timer.SetTierTime(key, Elapsed);
 		ManualSave();
 	}
-	//Feedback
+
 
 	private function Feedback(str, override)
 	{
 		if (override || DValDebug.GetValue()) com.GameInterface.UtilsBase.PrintChatText(string(str));
+		LogBase.Error("Speedrun", str);
 	}
 	private function PrintCurrentSettings(dv:DistributedValue)
 	{
 		Feedback("Current settings\n" + "Start " + m_startValue + "\n" +m_otherQuests.toString()+"\n"+ "End " + m_endValue);
 	}
-	//Mission Signals
+
 	// When failing/restarting tier while at tier 1 the timer will restart, this should fix that.
 	private function TaskFailed(TierID:Number)
 	{
 		m_taskFailed = TierID;
 	}
+	
 	private function SlotTaskAdded(QuestID)
 	{
 		if (IgnoredQuest(QuestID)) return;
